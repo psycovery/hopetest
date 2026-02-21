@@ -1007,16 +1007,7 @@ const HopePlanScreen = ({ profile, goals, overallProgress, purchased, onPurchase
   };
 
   const handlePay = () => {
-    if (!cardName.trim()) { setCardError("Please enter your name."); return; }
-    if (cardNumber.replace(/\s/g,"").length < 16) { setCardError("Please enter a valid 16-digit card number."); return; }
-    if (cardExpiry.length < 5) { setCardError("Please enter a valid expiry date."); return; }
-    if (cardCvc.length < 3) { setCardError("Please enter your 3-digit CVC."); return; }
-    setCardError("");
-    setStep("processing");
-    setTimeout(() => {
-      onPurchase();
-      setStep("plan");
-    }, 2200);
+    setStep("coming_soon");
   };
 
   const generatePlan = async () => {
@@ -1237,6 +1228,16 @@ Please create my personalised Guided Hope Plan.`;
   );
 
   // ── Processing ────────────────────────────────────────────────────────────
+  if (step === "coming_soon") return (
+    <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background:"#f4f7fb", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:32, textAlign:"center" }}>
+      <div style={{ fontSize:64, marginBottom:16 }}>🚀</div>
+      <div style={{ fontSize:22, fontWeight:800, color:"#1a1a2e", marginBottom:10 }}>Coming Soon</div>
+      <div style={{ fontSize:15, color:"#555", lineHeight:1.7, marginBottom:28 }}>This feature will be available shortly.<br/>We're working hard to bring it to you.</div>
+      <button onClick={onBack} style={{ background:`linear-gradient(135deg,#4DAFE8,#2e86c1)`, border:"none", borderRadius:14, padding:"14px 32px", color:"#fff", fontSize:15, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 16px rgba(77,175,232,0.4)" }}>Back</button>
+      <div style={{ marginTop:20, fontSize:12, color:"#aaa" }}>Hope Forward · powered by <span style={{ color:"#F5C518", fontWeight:700 }}>Psycovery</span></div>
+    </div>
+  );
+
   if (step === "processing") return (
     <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background: PLAN_GRAD, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:40, textAlign:"center" }}>
       <div style={{ fontSize:60, marginBottom:20 }}>🔒</div>
@@ -2046,13 +2047,25 @@ export default function App() {
                     ))}
                   </button>
                 ))}
-                {selectedPlan!==null&&<button onClick={()=>setBooked(true)} style={{ width:"100%", background:GRAD_GOLD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>Book {coachingPlans[selectedPlan].name} — {coachingPlans[selectedPlan].price}</button>}
+                {selectedPlan!==null&&<button onClick={async()=>{
+  setBooked("coming_soon");
+}} style={{ width:"100%", background:GRAD_GOLD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>Book {coachingPlans[selectedPlan].name} — {coachingPlans[selectedPlan].price} via Stripe</button>}
               </>
             ):(
               <div style={{ background:"#fff", borderRadius:16, padding:28, textAlign:"center", boxShadow:"0 2px 8px rgba(0,0,0,0.06)" }}>
-                <div style={{ fontSize:56 }}>🎉</div>
-                <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Booking Requested!</div>
-                <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>A Psycovery coach will be in touch within 24 hours.</div>
+                {booked==="coming_soon" ? (
+                  <>
+                    <div style={{ fontSize:56 }}>🚀</div>
+                    <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Coming Soon</div>
+                    <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>This feature will be available shortly.<br/>We're working hard to bring it to you.</div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontSize:56 }}>🎉</div>
+                    <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Booking Requested!</div>
+                    <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>A Psycovery coach will be in touch within 24 hours.</div>
+                  </>
+                )}
                 <button onClick={()=>{setBooked(false);setSelectedPlan(null);setScreen("home");}} style={{ marginTop:20, background:GRAD, border:"none", borderRadius:14, padding:"12px 24px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer" }}>Back to Home</button>
               </div>
             )}
