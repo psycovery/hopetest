@@ -729,23 +729,16 @@ When a user describes something they want to achieve, respond ONLY with a JSON a
 Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the JSON array.`;
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/suggest-goals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: systemPrompt,
-          messages: [{ role: "user", content: `Here's what I want to achieve: "${input.trim()}"` }],
-        }),
+        body: JSON.stringify({ input: input.trim() }),
       });
       const data = await response.json();
-      const text = data.content?.map(b => b.text || "").join("") || "";
-      const clean = text.replace(/```json|```/g, "").trim();
-      const parsed = JSON.parse(clean);
-      setSuggestions(parsed);
+      if (!response.ok) throw new Error(data.error || "Request failed");
+      setSuggestions(data.suggestions);
     } catch (e) {
-      setError("Something went wrong. Please try again.");
+      setError(e.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -1051,22 +1044,16 @@ Overall hope score: ${overallProgress}%
 Please create my personalised Guided Hope Plan.`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/generate-hope-plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1500,
-          system: systemPrompt,
-          messages: [{ role: "user", content: userMsg }],
-        }),
+        body: JSON.stringify({ profile, goals, overallProgress }),
       });
       const data = await res.json();
-      const text = (data.content || []).map(b => b.text || "").join("");
-      const clean = text.replace(/```json|```/g, "").trim();
-      setPlan(JSON.parse(clean));
+      if (!res.ok) throw new Error(data.error || "Request failed");
+      setPlan(data.plan);
     } catch (e) {
-      setPlanError("Couldn't generate your plan. Please try again.");
+      setPlanError(e.message || "Couldn't generate your plan. Please try again.");
     } finally {
       setPlanLoading(false);
     }
