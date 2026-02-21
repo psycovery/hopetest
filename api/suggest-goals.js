@@ -28,9 +28,10 @@ module.exports = async function handler(req, res) {
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    console.error('[suggest-goals] ANTHROPIC_API_KEY not set');
-    return res.status(500).json({ error: 'Server configuration error — API key missing' });
+    return res.status(500).json({ error: 'API key not configured on server' });
   }
+
+  let responseText = '';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -48,24 +49,46 @@ module.exports = async function handler(req, res) {
       }),
     });
 
-    const responseText = await response.text();
+    responseText = await response.text();
+    console.log('[suggest-goals] HTTP status:', response.status);
+    console.log('[suggest-goals] Raw response:', responseText.slice(0, 500));
 
-    if (!response.ok) {
-      console.error('[suggest-goals] Anthropic error:', responseText);
-      let detail = 'AI service error';
-      try { detail = JSON.parse(responseText)?.error?.message || detail; } catch {}
-      return res.status(502).json({ error: detail });
+    // Parse the response body
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (parseErr) {
+      return res.status(502).json({ error: 'Invalid response from AI service: ' + responseText.slice(0, 200) });
     }
 
-    const data = JSON.parse(responseText);
-    const text = (data.content || []).map(b => b.text || '').join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    const suggestions = JSON.parse(clean);
+    // Anthropic error response
+    if (!response.ok || data.type === 'error') {
+      const msg = data?.error?.message || JSON.stringify(data).slice(0, 200);
+      console.error('[suggest-goals] Anthropic error:', msg);
+      return res.status(502).json({ error: msg });
+    }
+
+    // Extract text content
+    const text = (data.content || []).map(b => b.text || '').join('').trim();
+    console.log('[suggest-goals] AI text:', text.slice(0, 300));
+
+    if (!text) {
+      return res.status(502).json({ error: 'Empty response from AI. Please try again.' });
+    }
+
+    // Parse JSON suggestions
+    let suggestions;
+    try {
+      const clean = text.replace(/```json|```/g, '').trim();
+      suggestions = JSON.parse(clean);
+    } catch (jsonErr) {
+      return res.status(502).json({ error: 'Could not parse AI response. Please try again.' });
+    }
 
     return res.status(200).json({ suggestions });
 
   } catch (e) {
-    console.error('[suggest-goals] Unexpected error:', e.message);
-    return res.status(500).json({ error: e.message || 'Unexpected error. Please try again.' });
+    console.error('[suggest-goals] Fatal error:', e.message, '| Raw response:', responseText.slice(0, 300));
+    return res.status(500).json({ error: 'Server error: ' + e.message });
   }
 };
