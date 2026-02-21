@@ -70,7 +70,7 @@ Please create my personalised Guided Hope Plan.`;
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 1500,
         system: systemPrompt,
         messages: [{ role: 'user', content: userMsg }],
@@ -80,7 +80,9 @@ Please create my personalised Guided Hope Plan.`;
     if (!response.ok) {
       const err = await response.text();
       console.error('[generate-hope-plan] Anthropic error:', err);
-      return res.status(502).json({ error: 'AI service unavailable. Please try again.' });
+      let detail = 'AI service unavailable.';
+      try { detail = JSON.parse(err)?.error?.message || detail; } catch {}
+      return res.status(502).json({ error: detail });
     }
 
     const data = await response.json();
