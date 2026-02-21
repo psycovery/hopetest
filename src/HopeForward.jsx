@@ -155,19 +155,23 @@ const onboardingSlides = [
 ];
 
 const PsycoveryLogo = ({ size=32, dark=false }) => {
-  const s1=dark?"rgba(44,130,201,0.95)":"rgba(255,255,255,0.9)";
-  const s2=dark?"rgba(44,130,201,0.55)":"rgba(255,255,255,0.65)";
-  const s3=dark?"rgba(44,130,201,0.35)":"rgba(255,255,255,0.5)";
-  const tk=dark?"rgba(44,130,201,0.9)":"rgba(255,255,255,0.95)";
-  const ct=dark?GOLD:"rgba(255,255,255,0.95)";
+  const g1 = dark ? GOLD : "#FFD700";
+  const g2 = dark ? GOLD_LIGHT : "#FFE566";
+  const g3 = dark ? "#F0C020" : "#FFC200";
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60">
-      <path d="M30 6 Q52 6 54 30 Q54 50 36 56" fill="none" stroke={s1} strokeWidth="3.5" strokeLinecap="round"/>
-      <path d="M30 6 Q10 8 8 28 Q6 48 24 56" fill="none" stroke={s2} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M52 22 Q58 38 46 50" fill="none" stroke={s3} strokeWidth="2" strokeLinecap="round"/>
-      {Array.from({length:12},(_,i)=>{const a=(i*30)*Math.PI/180;return <line key={i} x1={30+8*Math.cos(a)} y1={30+8*Math.sin(a)} x2={30+11*Math.cos(a)} y2={30+11*Math.sin(a)} stroke={tk} strokeWidth="1.5" strokeLinecap="round"/>;
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      {/* Swirl 1 — outer, darkest */}
+      <path d="M50 8 C76 5, 95 26, 92 50 C89 72, 70 89, 50 90 C33 91, 14 79, 10 61" fill="none" stroke={g1} strokeWidth="7.5" strokeLinecap="round"/>
+      {/* Swirl 2 — middle */}
+      <path d="M15 38 C10 20, 26 6, 46 8 C66 10, 82 26, 80 46 C78 63, 64 76, 50 78" fill="none" stroke={g3} strokeWidth="6" strokeLinecap="round"/>
+      {/* Swirl 3 — inner, lightest */}
+      <path d="M50 22 C64 20, 76 32, 76 46 C76 60, 65 72, 52 73" fill="none" stroke={g2} strokeWidth="4.5" strokeLinecap="round"/>
+      {/* Sun */}
+      <circle cx="50" cy="50" r="10" fill={g1}/>
+      {Array.from({length:16},(_,i)=>{
+        const a=(i*22.5)*Math.PI/180;
+        return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+17*Math.cos(a)} y2={50+17*Math.sin(a)} stroke={g1} strokeWidth="2.5" strokeLinecap="round"/>;
       })}
-      <circle cx="30" cy="30" r="7" fill={ct}/>
     </svg>
   );
 };
@@ -693,6 +697,7 @@ const GoalSuggesterScreen = ({ onBack, onAddGoal }) => {
   const [added, setAdded] = useState({});
   const [error, setError] = useState(null);
   const [dots, setDots] = useState(0);
+  const [quickWins, setQuickWins] = useState(false);
   const textareaRef = useRef();
 
   useEffect(() => {
@@ -732,7 +737,7 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
       const response = await fetch("/api/suggest-goals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: input.trim() }),
+        body: JSON.stringify({ input: input.trim(), quickWins }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Request failed");
@@ -804,17 +809,34 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
               </div>
             </div>
           )}
+          {/* Quick Wins toggle */}
+          <button
+            onClick={() => setQuickWins(q => !q)}
+            style={{ marginTop: 14, width: "100%", display: "flex", alignItems: "center", gap: 12, background: quickWins ? `${GREEN}12` : "#f4f7fb", border: `2px solid ${quickWins ? GREEN : "#e0e0e0"}`, borderRadius: 12, padding: "11px 14px", cursor: "pointer", transition: "all 0.2s", textAlign: "left" }}>
+            <div style={{ width: 22, height: 22, borderRadius: 6, border: `2px solid ${quickWins ? GREEN : "#ccc"}`, background: quickWins ? GREEN : "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.2s" }}>
+              {quickWins && <span style={{ color: "#fff", fontSize: 13, fontWeight: 800, lineHeight: 1 }}>✓</span>}
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontSize: 14 }}>⚡</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: quickWins ? GREEN : "#333" }}>Quick Wins</span>
+                <span style={{ fontSize: 10, background: quickWins ? GREEN : "#e0e0e0", color: quickWins ? "#fff" : "#888", borderRadius: 99, padding: "2px 8px", fontWeight: 700 }}>SHORT-TERM</span>
+              </div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>Suggest goals I can achieve in days or weeks, not months</div>
+            </div>
+          </button>
+
           <button
             onClick={getSuggestions}
             disabled={!input.trim() || loading}
-            style={{ marginTop: 14, width: "100%", background: input.trim() && !loading ? `linear-gradient(135deg, #1a1a2e, #2c3e50)` : "#e0e0e0", border: "none", borderRadius: 12, padding: "13px 16px", color: input.trim() && !loading ? "#fff" : "#aaa", fontSize: 14, fontWeight: 800, cursor: input.trim() && !loading ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s" }}>
+            style={{ marginTop: 10, width: "100%", background: input.trim() && !loading ? `linear-gradient(135deg, #1a1a2e, #2c3e50)` : "#e0e0e0", border: "none", borderRadius: 12, padding: "13px 16px", color: input.trim() && !loading ? "#fff" : "#aaa", fontSize: 14, fontWeight: 800, cursor: input.trim() && !loading ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s" }}>
             {loading ? (
               <>
                 <span style={{ display: "inline-block", animation: "spin 1s linear infinite", fontSize: 16 }}>⟳</span>
                 <span>Finding your goals{".".repeat(dots)}</span>
               </>
             ) : (
-              <><span>✨</span><span>Suggest Goals for Me</span></>
+              <><span>{quickWins ? "⚡" : "✨"}</span><span>{quickWins ? "Suggest Quick Wins" : "Suggest Goals for Me"}</span></>
             )}
           </button>
         </div>
@@ -873,6 +895,7 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3, flexWrap: "wrap" }}>
                           <span style={{ fontSize: 10, background: col, color: "#fff", borderRadius: 99, padding: "2px 8px", fontWeight: 700 }}>{icon} {sg.category}</span>
                           <span style={{ fontSize: 10, background: `${GOLD}22`, color: "#7a5f00", borderRadius: 99, padding: "2px 8px", fontWeight: 700, border: `1px solid ${GOLD}50` }}>✨ AI Suggested</span>
+                          {quickWins && <span style={{ fontSize: 10, background: `${GREEN}18`, color: GREEN, borderRadius: 99, padding: "2px 8px", fontWeight: 700, border: `1px solid ${GREEN}50` }}>⚡ Quick Win</span>}
                         </div>
                         <div style={{ fontSize: 14, fontWeight: 800, color: "#222", lineHeight: 1.3 }}>{sg.title}</div>
                         <div style={{ fontSize: 12, color: "#777", marginTop: 4, fontStyle: "italic", lineHeight: 1.4 }}>{sg.why}</div>

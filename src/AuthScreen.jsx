@@ -54,14 +54,12 @@ export default function AuthScreen({ onAuth }) {
       <div style={{ background: GRAD, padding: "48px 28px 40px", textAlign: "center" }}>
         {/* Psycovery logo mark */}
         <div style={{ width: 72, height: 72, borderRadius: 20, background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", border: "2px solid rgba(255,255,255,0.3)" }}>
-          <svg width="48" height="48" viewBox="0 0 60 60">
-            <path d="M30 6 Q52 6 54 30 Q54 50 36 56" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="3.5" strokeLinecap="round"/>
-            <path d="M30 6 Q10 8 8 28 Q6 48 24 56" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="2.5" strokeLinecap="round"/>
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i)=>{
-              const r=Math.PI*deg/180;
-              return <line key={i} x1={30+13*Math.cos(r)} y1={30+13*Math.sin(r)} x2={30+17*Math.cos(r)} y2={30+17*Math.sin(r)} stroke="rgba(255,255,255,0.95)" strokeWidth="2" strokeLinecap="round"/>;
-            })}
-            <circle cx="30" cy="30" r="7" fill={GOLD}/>
+          <svg width="48" height="48" viewBox="0 0 100 100">
+            <path d="M50 8 C76 5, 95 26, 92 50 C89 72, 70 89, 50 90 C33 91, 14 79, 10 61" fill="none" stroke="#FFD700" strokeWidth="7.5" strokeLinecap="round"/>
+            <path d="M15 38 C10 20, 26 6, 46 8 C66 10, 82 26, 80 46 C78 63, 64 76, 50 78" fill="none" stroke="#FFC200" strokeWidth="6" strokeLinecap="round"/>
+            <path d="M50 22 C64 20, 76 32, 76 46 C76 60, 65 72, 52 73" fill="none" stroke="#FFE566" strokeWidth="4.5" strokeLinecap="round"/>
+            <circle cx="50" cy="50" r="10" fill="#FFD700"/>
+            {Array.from({length:16},(_,i)=>{const a=(i*22.5)*Math.PI/180;return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+17*Math.cos(a)} y2={50+17*Math.sin(a)} stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round"/>;})}
           </svg>
         </div>
         <div style={{ fontSize: 26, fontWeight: 800, color: "#fff", marginBottom: 4 }}>Hope Forward</div>
