@@ -1,21 +1,24 @@
 // api/generate-hope-plan.js
-// Hope Forward — Vercel serverless function
-// Proxies Guided Hope Plan requests to Anthropic API server-side
-// Your ANTHROPIC_API_KEY stays secret — never exposed to the browser
+// Hope Forward — Vercel serverless function (CommonJS)
+// Psycovery
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const { profile, goals, overallProgress } = req.body;
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const { profile, goals, overallProgress } = req.body || {};
   if (!profile) {
     return res.status(400).json({ error: 'Missing profile data' });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Server configuration error' });
+    console.error('[generate-hope-plan] ANTHROPIC_API_KEY not set');
+    return res.status(500).json({ error: 'Server configuration error — API key missing' });
   }
 
   const goalsSummary = goals?.length
@@ -30,12 +33,7 @@ Create a structured, warm, and actionable Hope Plan. Respond ONLY with a valid J
   "hopeScore": number (0-100, based on goals progress),
   "summary": "2-3 sentences: a warm, honest summary of where this person is and what their plan will help them achieve",
   "pillars": [
-    {
-      "icon": "single emoji",
-      "title": "Pillar title",
-      "description": "1 sentence description",
-      "actions": ["action 1", "action 2", "action 3"]
-    }
+    { "icon": "single emoji", "title": "Pillar title", "description": "1 sentence description", "actions": ["action 1", "action 2", "action 3"] }
   ],
   "weeklyPlan": [
     { "week": 1, "focus": "theme", "tasks": ["task 1", "task 2", "task 3"] },
@@ -51,7 +49,7 @@ Create a structured, warm, and actionable Hope Plan. Respond ONLY with a valid J
   ]
 }
 
-Base the plan on their name, region, goals and progress. Be specific, compassionate, and grounded in Hope Theory (goals, pathways, agency). Return ONLY JSON. No preamble, no markdown backticks.`;
+Return ONLY JSON. No preamble, no markdown backticks.`;
 
   const userMsg = `Name: ${profile.preferredName || profile.firstName || 'Friend'}
 Region: ${profile.region || 'UK'}
@@ -77,22 +75,24 @@ Please create my personalised Guided Hope Plan.`;
       }),
     });
 
+    const responseText = await response.text();
+
     if (!response.ok) {
-      const err = await response.text();
-      console.error('[generate-hope-plan] Anthropic error:', err);
-      let detail = 'AI service unavailable.';
-      try { detail = JSON.parse(err)?.error?.message || detail; } catch {}
+      console.error('[generate-hope-plan] Anthropic error:', responseText);
+      let detail = 'AI service error';
+      try { detail = JSON.parse(responseText)?.error?.message || detail; } catch {}
       return res.status(502).json({ error: detail });
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     const text = (data.content || []).map(b => b.text || '').join('');
     const clean = text.replace(/```json|```/g, '').trim();
     const plan = JSON.parse(clean);
 
     return res.status(200).json({ plan });
+
   } catch (e) {
-    console.error('[generate-hope-plan] Error:', e);
-    return res.status(500).json({ error: 'Could not generate your plan. Please try again.' });
+    console.error('[generate-hope-plan] Unexpected error:', e.message);
+    return res.status(500).json({ error: e.message || 'Unexpected error. Please try again.' });
   }
-}
+};
