@@ -1144,7 +1144,7 @@ Please create my personalised Guided Hope Plan.`;
           <div style={{ fontSize:12, color:"#444", lineHeight:1.5 }}>Built by <strong style={{ color:BLUE }}>Psycovery</strong> — specialists in applying Hope Theory in forensic and reentry settings. Founded by David Adlington-Rivers.</div>
         </div>
 
-        <button onClick={() => setStep("payment")} style={{ width:"100%", background: PLAN_GRAD, border:"none", borderRadius:16, padding:"16px 20px", color:"#fff", fontSize:16, fontWeight:800, cursor:"pointer", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+        <button onClick={() => setStep("coming_soon")} style={{ width:"100%", background: PLAN_GRAD, border:"none", borderRadius:16, padding:"16px 20px", color:"#fff", fontSize:16, fontWeight:800, cursor:"pointer", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
           <span style={{ fontSize:18 }}>📋</span>
           <span>Get My Hope Plan — £4.99</span>
         </button>
@@ -1154,80 +1154,6 @@ Please create my personalised Guided Hope Plan.`;
   );
 
   // ── Payment form ──────────────────────────────────────────────────────────
-  if (step === "payment") return (
-    <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background:"#f4f7fb", paddingBottom:40 }}>
-      <div style={{ background: PLAN_GRAD, padding:"16px 20px 28px" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
-          <button onClick={() => setStep("product")} style={{ background:"rgba(255,255,255,0.15)", border:"none", borderRadius:99, width:34, height:34, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:18 }}>‹</button>
-          <div style={{ fontSize:12, color:"rgba(255,255,255,0.8)", fontWeight:700 }}>Secure Checkout</div>
-          <div style={{ marginLeft:"auto", fontSize:18 }}>🔒</div>
-        </div>
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <div style={{ fontSize:32 }}>📋</div>
-          <div>
-            <div style={{ fontSize:16, fontWeight:800, color:"#fff" }}>Guided Hope Plan</div>
-            <div style={{ fontSize:13, color:"rgba(255,255,255,0.7)" }}>One-time purchase</div>
-          </div>
-          <div style={{ marginLeft:"auto", fontSize:22, fontWeight:800, color:GOLD }}>£4.99</div>
-        </div>
-      </div>
-
-      <div style={{ padding:"0 20px", marginTop:-16 }}>
-        <div style={{ background:"#fff", borderRadius:18, padding:20, boxShadow:"0 4px 20px rgba(0,0,0,0.08)", marginBottom:16 }}>
-          <div style={{ fontSize:13, fontWeight:800, color:"#333", marginBottom:16, display:"flex", alignItems:"center", gap:8 }}>
-            <span style={{ fontSize:18 }}>💳</span> Card Details
-          </div>
-
-          <div style={{ marginBottom:14 }}>
-            <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Name on card</div>
-            <input value={cardName} onChange={e=>setCardName(e.target.value)} placeholder="e.g. Alex Johnson" style={inp()}/>
-          </div>
-          <div style={{ marginBottom:14 }}>
-            <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Card number</div>
-            <div style={{ position:"relative" }}>
-              <input value={cardNumber} onChange={e=>setCardNumber(formatCard(e.target.value))} placeholder="1234 5678 9012 3456" inputMode="numeric" style={{ ...inp(), paddingRight:44, letterSpacing:"0.08em" }}/>
-              <div style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", fontSize:20 }}>
-                {cardNumber.startsWith("4") ? "💳" : cardNumber.startsWith("5") ? "💳" : "💳"}
-              </div>
-            </div>
-          </div>
-          <div style={{ display:"flex", gap:12, marginBottom:14 }}>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Expiry</div>
-              <input value={cardExpiry} onChange={e=>setCardExpiry(formatExpiry(e.target.value))} placeholder="MM/YY" inputMode="numeric" style={inp()} maxLength={5}/>
-            </div>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>CVC</div>
-              <input value={cardCvc} onChange={e=>setCardCvc(e.target.value.replace(/\D/g,"").slice(0,3))} placeholder="123" inputMode="numeric" style={inp()} maxLength={3}/>
-            </div>
-          </div>
-
-          {cardError && (
-            <div style={{ background:"#fff5f5", borderRadius:10, padding:"10px 12px", marginBottom:12, borderLeft:"3px solid #e74c3c", fontSize:12, color:"#c0392b", fontWeight:600 }}>
-              ⚠️ {cardError}
-            </div>
-          )}
-
-          <div style={{ background:"#f8fafc", borderRadius:10, padding:"10px 12px", marginBottom:16, display:"flex", gap:8 }}>
-            <span style={{ fontSize:14 }}>🔒</span>
-            <div style={{ fontSize:11, color:"#888", lineHeight:1.4 }}>Your payment is processed securely. Card details are never stored on our servers.</div>
-          </div>
-
-          <button onClick={handlePay} style={{ width:"100%", background:PLAN_GRAD, border:"none", borderRadius:14, padding:"15px 20px", color:"#fff", fontSize:15, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 16px rgba(0,0,0,0.22)", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-            <span>🔒</span><span>Pay £4.99 Securely</span>
-          </button>
-        </div>
-
-        <div style={{ display:"flex", justifyContent:"center", gap:16, marginTop:8 }}>
-          {["Visa","Mastercard","Amex","Apple Pay"].map(p => (
-            <div key={p} style={{ fontSize:10, color:"#bbb", fontWeight:700 }}>{p}</div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ── Processing ────────────────────────────────────────────────────────────
   if (step === "coming_soon") return (
     <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background:"#f4f7fb", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:32, textAlign:"center" }}>
       <div style={{ fontSize:64, marginBottom:16 }}>🚀</div>
