@@ -1359,6 +1359,7 @@ export default function App() {
   const [showSuggester, setShowSuggester] = useState(false);
   const [showHopePlan, setShowHopePlan] = useState(false);
   const [purchasedHopePlan, setPurchasedHopePlan] = useState(false);
+  const [hideEmergency, setHideEmergency] = useState(false);
 
   const overallProgress = goals.length ? Math.round(goals.reduce((a,g)=>a+g.agency,0)/goals.length) : 0;
   const displayName = profile.preferredName || profile.firstName || "there";
@@ -2035,13 +2036,30 @@ export default function App() {
       )}
 
       {screen!=="emergency"&&(
-        <button onClick={()=>setScreen("emergency")} style={{ position:"fixed", bottom:80, left:"50%", transform:"translateX(-50%)", width:"calc(100% - 40px)", maxWidth:350, background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:16, padding:"14px 20px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer", boxShadow:"0 6px 20px rgba(192,57,43,0.45)", display:"flex", alignItems:"center", justifyContent:"space-between", zIndex:99 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:10, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>🆘</div>
-            <div style={{ textAlign:"left" }}><div style={{ fontSize:14, fontWeight:800 }}>Emergency Support</div><div style={{ fontSize:11, opacity:0.85, fontWeight:400 }}>Free 24/7 crisis help available now</div></div>
+        hideEmergency ? (
+          // Minimised pill — tap to restore
+          <button onClick={()=>setHideEmergency(false)} style={{ position:"fixed", bottom:80, right:16, background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:99, padding:"8px 14px", color:"#fff", fontSize:12, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 14px rgba(192,57,43,0.5)", display:"flex", alignItems:"center", gap:6, zIndex:99 }}>
+            <span style={{ fontSize:14 }}>🆘</span>
+            <span>Crisis Help</span>
+          </button>
+        ) : (
+          <div style={{ position:"fixed", bottom:80, left:"50%", transform:"translateX(-50%)", width:"calc(100% - 40px)", maxWidth:350, zIndex:99, display:"flex", flexDirection:"column", gap:0 }}>
+            {/* Hide button */}
+            <div style={{ display:"flex", justifyContent:"flex-end", marginBottom:4 }}>
+              <button onClick={()=>setHideEmergency(true)} style={{ background:"rgba(0,0,0,0.18)", border:"none", borderRadius:99, padding:"3px 10px", color:"#fff", fontSize:10, fontWeight:700, cursor:"pointer", backdropFilter:"blur(4px)" }}>
+                Hide ✕
+              </button>
+            </div>
+            {/* Main button */}
+            <button onClick={()=>setScreen("emergency")} style={{ width:"100%", background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:16, padding:"14px 20px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer", boxShadow:"0 6px 20px rgba(192,57,43,0.45)", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:10, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>🆘</div>
+                <div style={{ textAlign:"left" }}><div style={{ fontSize:14, fontWeight:800 }}>Emergency Support</div><div style={{ fontSize:11, opacity:0.85, fontWeight:400 }}>Free 24/7 crisis help available now</div></div>
+              </div>
+              <div style={{ fontSize:18, opacity:0.8 }}>›</div>
+            </button>
           </div>
-          <div style={{ fontSize:18, opacity:0.8 }}>›</div>
-        </button>
+        )
       )}
 
       <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:390, background:"#fff", borderTop:"1px solid #f0f0f0", display:"flex", padding:"8px 0" }}>
