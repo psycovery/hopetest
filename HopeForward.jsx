@@ -155,19 +155,23 @@ const onboardingSlides = [
 ];
 
 const PsycoveryLogo = ({ size=32, dark=false }) => {
-  const s1=dark?"rgba(44,130,201,0.95)":"rgba(255,255,255,0.9)";
-  const s2=dark?"rgba(44,130,201,0.55)":"rgba(255,255,255,0.65)";
-  const s3=dark?"rgba(44,130,201,0.35)":"rgba(255,255,255,0.5)";
-  const tk=dark?"rgba(44,130,201,0.9)":"rgba(255,255,255,0.95)";
-  const ct=dark?GOLD:"rgba(255,255,255,0.95)";
+  const g1 = dark ? GOLD : "#FFD700";
+  const g2 = dark ? GOLD_LIGHT : "#FFE566";
+  const g3 = dark ? "#F0C020" : "#FFC200";
   return (
-    <svg width={size} height={size} viewBox="0 0 60 60">
-      <path d="M30 6 Q52 6 54 30 Q54 50 36 56" fill="none" stroke={s1} strokeWidth="3.5" strokeLinecap="round"/>
-      <path d="M30 6 Q10 8 8 28 Q6 48 24 56" fill="none" stroke={s2} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M52 22 Q58 38 46 50" fill="none" stroke={s3} strokeWidth="2" strokeLinecap="round"/>
-      {Array.from({length:12},(_,i)=>{const a=(i*30)*Math.PI/180;return <line key={i} x1={30+8*Math.cos(a)} y1={30+8*Math.sin(a)} x2={30+11*Math.cos(a)} y2={30+11*Math.sin(a)} stroke={tk} strokeWidth="1.5" strokeLinecap="round"/>;
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      {/* Swirl 1 — outer, darkest */}
+      <path d="M50 8 C76 5, 95 26, 92 50 C89 72, 70 89, 50 90 C33 91, 14 79, 10 61" fill="none" stroke={g1} strokeWidth="7.5" strokeLinecap="round"/>
+      {/* Swirl 2 — middle */}
+      <path d="M15 38 C10 20, 26 6, 46 8 C66 10, 82 26, 80 46 C78 63, 64 76, 50 78" fill="none" stroke={g3} strokeWidth="6" strokeLinecap="round"/>
+      {/* Swirl 3 — inner, lightest */}
+      <path d="M50 22 C64 20, 76 32, 76 46 C76 60, 65 72, 52 73" fill="none" stroke={g2} strokeWidth="4.5" strokeLinecap="round"/>
+      {/* Sun */}
+      <circle cx="50" cy="50" r="10" fill={g1}/>
+      {Array.from({length:16},(_,i)=>{
+        const a=(i*22.5)*Math.PI/180;
+        return <line key={i} x1={50+12*Math.cos(a)} y1={50+12*Math.sin(a)} x2={50+17*Math.cos(a)} y2={50+17*Math.sin(a)} stroke={g1} strokeWidth="2.5" strokeLinecap="round"/>;
       })}
-      <circle cx="30" cy="30" r="7" fill={ct}/>
     </svg>
   );
 };
@@ -693,6 +697,7 @@ const GoalSuggesterScreen = ({ onBack, onAddGoal }) => {
   const [added, setAdded] = useState({});
   const [error, setError] = useState(null);
   const [dots, setDots] = useState(0);
+  const [quickWins, setQuickWins] = useState(false);
   const textareaRef = useRef();
 
   useEffect(() => {
@@ -732,7 +737,7 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
       const response = await fetch("/api/suggest-goals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: input.trim() }),
+        body: JSON.stringify({ input: input.trim(), quickWins }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Request failed");
@@ -804,17 +809,34 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
               </div>
             </div>
           )}
+          {/* Quick Wins toggle */}
+          <button
+            onClick={() => setQuickWins(q => !q)}
+            style={{ marginTop: 14, width: "100%", display: "flex", alignItems: "center", gap: 12, background: quickWins ? `${GREEN}12` : "#f4f7fb", border: `2px solid ${quickWins ? GREEN : "#e0e0e0"}`, borderRadius: 12, padding: "11px 14px", cursor: "pointer", transition: "all 0.2s", textAlign: "left" }}>
+            <div style={{ width: 22, height: 22, borderRadius: 6, border: `2px solid ${quickWins ? GREEN : "#ccc"}`, background: quickWins ? GREEN : "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.2s" }}>
+              {quickWins && <span style={{ color: "#fff", fontSize: 13, fontWeight: 800, lineHeight: 1 }}>✓</span>}
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontSize: 14 }}>⚡</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: quickWins ? GREEN : "#333" }}>Quick Wins</span>
+                <span style={{ fontSize: 10, background: quickWins ? GREEN : "#e0e0e0", color: quickWins ? "#fff" : "#888", borderRadius: 99, padding: "2px 8px", fontWeight: 700 }}>SHORT-TERM</span>
+              </div>
+              <div style={{ fontSize: 11, color: "#888", marginTop: 2 }}>Suggest goals I can achieve in days or weeks, not months</div>
+            </div>
+          </button>
+
           <button
             onClick={getSuggestions}
             disabled={!input.trim() || loading}
-            style={{ marginTop: 14, width: "100%", background: input.trim() && !loading ? `linear-gradient(135deg, #1a1a2e, #2c3e50)` : "#e0e0e0", border: "none", borderRadius: 12, padding: "13px 16px", color: input.trim() && !loading ? "#fff" : "#aaa", fontSize: 14, fontWeight: 800, cursor: input.trim() && !loading ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s" }}>
+            style={{ marginTop: 10, width: "100%", background: input.trim() && !loading ? `linear-gradient(135deg, #1a1a2e, #2c3e50)` : "#e0e0e0", border: "none", borderRadius: 12, padding: "13px 16px", color: input.trim() && !loading ? "#fff" : "#aaa", fontSize: 14, fontWeight: 800, cursor: input.trim() && !loading ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s" }}>
             {loading ? (
               <>
                 <span style={{ display: "inline-block", animation: "spin 1s linear infinite", fontSize: 16 }}>⟳</span>
                 <span>Finding your goals{".".repeat(dots)}</span>
               </>
             ) : (
-              <><span>✨</span><span>Suggest Goals for Me</span></>
+              <><span>{quickWins ? "⚡" : "✨"}</span><span>{quickWins ? "Suggest Quick Wins" : "Suggest Goals for Me"}</span></>
             )}
           </button>
         </div>
@@ -873,6 +895,7 @@ Respond ONLY with valid JSON. No preamble, no markdown, no explanation. Just the
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3, flexWrap: "wrap" }}>
                           <span style={{ fontSize: 10, background: col, color: "#fff", borderRadius: 99, padding: "2px 8px", fontWeight: 700 }}>{icon} {sg.category}</span>
                           <span style={{ fontSize: 10, background: `${GOLD}22`, color: "#7a5f00", borderRadius: 99, padding: "2px 8px", fontWeight: 700, border: `1px solid ${GOLD}50` }}>✨ AI Suggested</span>
+                          {quickWins && <span style={{ fontSize: 10, background: `${GREEN}18`, color: GREEN, borderRadius: 99, padding: "2px 8px", fontWeight: 700, border: `1px solid ${GREEN}50` }}>⚡ Quick Win</span>}
                         </div>
                         <div style={{ fontSize: 14, fontWeight: 800, color: "#222", lineHeight: 1.3 }}>{sg.title}</div>
                         <div style={{ fontSize: 12, color: "#777", marginTop: 4, fontStyle: "italic", lineHeight: 1.4 }}>{sg.why}</div>
@@ -984,16 +1007,7 @@ const HopePlanScreen = ({ profile, goals, overallProgress, purchased, onPurchase
   };
 
   const handlePay = () => {
-    if (!cardName.trim()) { setCardError("Please enter your name."); return; }
-    if (cardNumber.replace(/\s/g,"").length < 16) { setCardError("Please enter a valid 16-digit card number."); return; }
-    if (cardExpiry.length < 5) { setCardError("Please enter a valid expiry date."); return; }
-    if (cardCvc.length < 3) { setCardError("Please enter your 3-digit CVC."); return; }
-    setCardError("");
-    setStep("processing");
-    setTimeout(() => {
-      onPurchase();
-      setStep("plan");
-    }, 2200);
+    setStep("coming_soon");
   };
 
   const generatePlan = async () => {
@@ -1130,7 +1144,7 @@ Please create my personalised Guided Hope Plan.`;
           <div style={{ fontSize:12, color:"#444", lineHeight:1.5 }}>Built by <strong style={{ color:BLUE }}>Psycovery</strong> — specialists in applying Hope Theory in forensic and reentry settings. Founded by David Adlington-Rivers.</div>
         </div>
 
-        <button onClick={() => setStep("payment")} style={{ width:"100%", background: PLAN_GRAD, border:"none", borderRadius:16, padding:"16px 20px", color:"#fff", fontSize:16, fontWeight:800, cursor:"pointer", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+        <button onClick={() => setStep("coming_soon")} style={{ width:"100%", background: PLAN_GRAD, border:"none", borderRadius:16, padding:"16px 20px", color:"#fff", fontSize:16, fontWeight:800, cursor:"pointer", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
           <span style={{ fontSize:18 }}>📋</span>
           <span>Get My Hope Plan — £4.99</span>
         </button>
@@ -1140,80 +1154,16 @@ Please create my personalised Guided Hope Plan.`;
   );
 
   // ── Payment form ──────────────────────────────────────────────────────────
-  if (step === "payment") return (
-    <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background:"#f4f7fb", paddingBottom:40 }}>
-      <div style={{ background: PLAN_GRAD, padding:"16px 20px 28px" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
-          <button onClick={() => setStep("product")} style={{ background:"rgba(255,255,255,0.15)", border:"none", borderRadius:99, width:34, height:34, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontSize:18 }}>‹</button>
-          <div style={{ fontSize:12, color:"rgba(255,255,255,0.8)", fontWeight:700 }}>Secure Checkout</div>
-          <div style={{ marginLeft:"auto", fontSize:18 }}>🔒</div>
-        </div>
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <div style={{ fontSize:32 }}>📋</div>
-          <div>
-            <div style={{ fontSize:16, fontWeight:800, color:"#fff" }}>Guided Hope Plan</div>
-            <div style={{ fontSize:13, color:"rgba(255,255,255,0.7)" }}>One-time purchase</div>
-          </div>
-          <div style={{ marginLeft:"auto", fontSize:22, fontWeight:800, color:GOLD }}>£4.99</div>
-        </div>
-      </div>
-
-      <div style={{ padding:"0 20px", marginTop:-16 }}>
-        <div style={{ background:"#fff", borderRadius:18, padding:20, boxShadow:"0 4px 20px rgba(0,0,0,0.08)", marginBottom:16 }}>
-          <div style={{ fontSize:13, fontWeight:800, color:"#333", marginBottom:16, display:"flex", alignItems:"center", gap:8 }}>
-            <span style={{ fontSize:18 }}>💳</span> Card Details
-          </div>
-
-          <div style={{ marginBottom:14 }}>
-            <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Name on card</div>
-            <input value={cardName} onChange={e=>setCardName(e.target.value)} placeholder="e.g. Alex Johnson" style={inp()}/>
-          </div>
-          <div style={{ marginBottom:14 }}>
-            <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Card number</div>
-            <div style={{ position:"relative" }}>
-              <input value={cardNumber} onChange={e=>setCardNumber(formatCard(e.target.value))} placeholder="1234 5678 9012 3456" inputMode="numeric" style={{ ...inp(), paddingRight:44, letterSpacing:"0.08em" }}/>
-              <div style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", fontSize:20 }}>
-                {cardNumber.startsWith("4") ? "💳" : cardNumber.startsWith("5") ? "💳" : "💳"}
-              </div>
-            </div>
-          </div>
-          <div style={{ display:"flex", gap:12, marginBottom:14 }}>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>Expiry</div>
-              <input value={cardExpiry} onChange={e=>setCardExpiry(formatExpiry(e.target.value))} placeholder="MM/YY" inputMode="numeric" style={inp()} maxLength={5}/>
-            </div>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#666", marginBottom:6 }}>CVC</div>
-              <input value={cardCvc} onChange={e=>setCardCvc(e.target.value.replace(/\D/g,"").slice(0,3))} placeholder="123" inputMode="numeric" style={inp()} maxLength={3}/>
-            </div>
-          </div>
-
-          {cardError && (
-            <div style={{ background:"#fff5f5", borderRadius:10, padding:"10px 12px", marginBottom:12, borderLeft:"3px solid #e74c3c", fontSize:12, color:"#c0392b", fontWeight:600 }}>
-              ⚠️ {cardError}
-            </div>
-          )}
-
-          <div style={{ background:"#f8fafc", borderRadius:10, padding:"10px 12px", marginBottom:16, display:"flex", gap:8 }}>
-            <span style={{ fontSize:14 }}>🔒</span>
-            <div style={{ fontSize:11, color:"#888", lineHeight:1.4 }}>Your payment is processed securely. Card details are never stored on our servers.</div>
-          </div>
-
-          <button onClick={handlePay} style={{ width:"100%", background:PLAN_GRAD, border:"none", borderRadius:14, padding:"15px 20px", color:"#fff", fontSize:15, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 16px rgba(0,0,0,0.22)", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-            <span>🔒</span><span>Pay £4.99 Securely</span>
-          </button>
-        </div>
-
-        <div style={{ display:"flex", justifyContent:"center", gap:16, marginTop:8 }}>
-          {["Visa","Mastercard","Amex","Apple Pay"].map(p => (
-            <div key={p} style={{ fontSize:10, color:"#bbb", fontWeight:700 }}>{p}</div>
-          ))}
-        </div>
-      </div>
+  if (step === "coming_soon") return (
+    <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background:"#f4f7fb", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:32, textAlign:"center" }}>
+      <div style={{ fontSize:64, marginBottom:16 }}>🚀</div>
+      <div style={{ fontSize:22, fontWeight:800, color:"#1a1a2e", marginBottom:10 }}>Coming Soon</div>
+      <div style={{ fontSize:15, color:"#555", lineHeight:1.7, marginBottom:28 }}>This feature will be available shortly.<br/>We're working hard to bring it to you.</div>
+      <button onClick={onBack} style={{ background:`linear-gradient(135deg,#4DAFE8,#2e86c1)`, border:"none", borderRadius:14, padding:"14px 32px", color:"#fff", fontSize:15, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 16px rgba(77,175,232,0.4)" }}>Back</button>
+      <div style={{ marginTop:20, fontSize:12, color:"#aaa" }}>Hope Forward · powered by <span style={{ color:"#F5C518", fontWeight:700 }}>Psycovery</span></div>
     </div>
   );
 
-  // ── Processing ────────────────────────────────────────────────────────────
   if (step === "processing") return (
     <div style={{ fontFamily:"'Segoe UI',sans-serif", maxWidth:390, margin:"0 auto", minHeight:"100vh", background: PLAN_GRAD, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:40, textAlign:"center" }}>
       <div style={{ fontSize:60, marginBottom:20 }}>🔒</div>
@@ -2023,13 +1973,25 @@ export default function App() {
                     ))}
                   </button>
                 ))}
-                {selectedPlan!==null&&<button onClick={()=>setBooked(true)} style={{ width:"100%", background:GRAD_GOLD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>Book {coachingPlans[selectedPlan].name} — {coachingPlans[selectedPlan].price}</button>}
+                {selectedPlan!==null&&<button onClick={async()=>{
+  setBooked("coming_soon");
+}} style={{ width:"100%", background:GRAD_GOLD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>Book {coachingPlans[selectedPlan].name} — {coachingPlans[selectedPlan].price} via Stripe</button>}
               </>
             ):(
               <div style={{ background:"#fff", borderRadius:16, padding:28, textAlign:"center", boxShadow:"0 2px 8px rgba(0,0,0,0.06)" }}>
-                <div style={{ fontSize:56 }}>🎉</div>
-                <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Booking Requested!</div>
-                <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>A Psycovery coach will be in touch within 24 hours.</div>
+                {booked==="coming_soon" ? (
+                  <>
+                    <div style={{ fontSize:56 }}>🚀</div>
+                    <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Coming Soon</div>
+                    <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>This feature will be available shortly.<br/>We're working hard to bring it to you.</div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontSize:56 }}>🎉</div>
+                    <div style={{ fontSize:18, fontWeight:800, color:"#333", marginTop:12 }}>Booking Requested!</div>
+                    <div style={{ fontSize:13, color:"#555", lineHeight:1.6, marginTop:8 }}>A Psycovery coach will be in touch within 24 hours.</div>
+                  </>
+                )}
                 <button onClick={()=>{setBooked(false);setSelectedPlan(null);setScreen("home");}} style={{ marginTop:20, background:GRAD, border:"none", borderRadius:14, padding:"12px 24px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer" }}>Back to Home</button>
               </div>
             )}
