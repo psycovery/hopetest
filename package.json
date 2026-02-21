@@ -2,7 +2,6 @@
   "name": "hope-forward",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "description": "Hope Forward — Powered by Psycovery. Rebuild your life, step by step.",
   "author": "Psycovery <hello@psycovery.co.uk>",
   "license": "UNLICENSED",
