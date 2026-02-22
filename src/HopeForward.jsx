@@ -79,11 +79,11 @@ const SEED_USERS = [
 
 const categoryColors = {
   "Probation & Supervision":"#c0392b", Housing:BLUE, Employment:ORANGE,
-  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5", "Dealing with Barriers":"#E8873A",
+  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5",
 };
 const categoryIcons = {
   "Probation & Supervision":"⚖️", Housing:"🏠", Employment:"💼",
-  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️", "Dealing with Barriers":"🧱",
+  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️",
 };
 
 const SERVICE_CATEGORIES = ["Housing","Employment","Mental Health","Substance Use","Legal & Probation","Family Support","Food & Finance","Education & Training","Health","Community"];
@@ -217,19 +217,7 @@ const goalLibrary = {
     { title:"Get my driving licence back after disqualification", steps:["Check my disqualification end date with the DVLA","Complete any required extended driving test or drink-drive rehabilitation course","Apply to the DVLA to restore my licence once the period has ended"] },
     { title:"Understand the sex offenders register and my obligations", steps:["Get a full written explanation of my notification requirements from police","Set reminders for all annual registration appointments","Speak to a solicitor about applying for removal from the register after the eligible period"] },
     { title:"Plan for life after a Serious Crime Prevention Order or SHPO", steps:["Get a written copy of all conditions and review them with a solicitor","Build a daily routine that clearly keeps me within the order's requirements","Apply to vary or discharge conditions that prevent legitimate work or housing once eligible"] },
-  ],
-  "Dealing with Barriers":[
-    { title:"Turn rejection into resilience", steps:["Write down the last time I was rejected and what I learned from it","Remind myself that rejection is a redirection not a verdict on my worth","Set a goal to try again within 48 hours of any setback — momentum beats hesitation"] },
-    { title:"Overcome the fear of judgement from others", steps:["Write a list of the people whose opinion genuinely matters to my future","Practise responding to stigma with calm confidence — prepare a short honest statement","Remember that most people are focused on their own challenges, not mine"] },
-    { title:"Break through a mental block that is holding me back", steps:["Name the block clearly — is it fear, shame, uncertainty or lack of information?","Talk to someone I trust about the barrier and ask if they see a way through","Take the smallest possible action towards the thing I have been avoiding"] },
-    { title:"Deal with discrimination in the job market", steps:["Research my rights under the Equality Act and the Rehabilitation of Offenders Act","Document any unfair treatment in writing with dates and details","Contact Nacro or Citizens Advice to explore whether I have grounds for a complaint"] },
-    { title:"Stop letting my past define my future", steps:["Write two lists — what I have been through and who I am choosing to become","Share my story with one trusted person as an act of reclaiming my own narrative","Replace the phrase 'I am my record' with 'I am what I do next' as a daily affirmation"] },
-    { title:"Build hope when everything feels hopeless", steps:["Identify one small area of my life where I do have control and focus there first","Contact a peer mentor or support group of others who have faced similar challenges","Write down three things — however small — that went right today"] },
-    { title:"Manage setbacks without giving up", steps:["Expect that the path forward will not be straight — setbacks are part of every journey","Create a personal 'recovery plan' — a list of 3 things I will do when I hit a low point","Call or message a trusted person within 24 hours of a significant setback"] },
-    { title:"Handle stress without falling back on old habits", steps:["Identify my top 3 stress triggers and the habits they tempt me towards","Replace each trigger with a planned healthy response — exercise, a call, fresh air","Talk to my support worker or GP about stress management and coping strategies"] },
-    { title:"Push through the shame of asking for help", steps:["Remind myself that asking for help is a sign of strength not weakness","Write a list of the people and organisations that exist specifically to help me","Make one call or send one message today — the hardest part is always the first step"] },
-    { title:"Stay motivated when progress feels slow", steps:["Look back at where I started and write down every change however small","Break my big goal into weekly targets so I can see movement every 7 days","Find one person further along the same journey and let their progress inspire mine"] },
-  ],
+  ]
 };
 
 
@@ -1699,6 +1687,20 @@ export default function App() {
               </div>
               <div style={{ fontSize:18, opacity:0.6, position:"relative" }}>›</div>
             </button>
+            {/* Dealing with Barriers card */}
+            <button onClick={()=>setScreen("barriers")} style={{ width:"100%", marginTop:12, background:"linear-gradient(135deg,#E8873A,#c0622a)", border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:"0 6px 20px rgba(232,135,58,0.35)", display:"flex", justifyContent:"space-between", alignItems:"center", position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:-20, right:-20, width:90, height:90, borderRadius:"50%", background:"rgba(255,255,255,0.08)" }}/>
+              <div style={{ position:"absolute", bottom:-24, right:50, width:60, height:60, borderRadius:"50%", background:"rgba(255,255,255,0.06)" }}/>
+              <div style={{ display:"flex", alignItems:"center", gap:12, position:"relative" }}>
+                <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:12, width:46, height:46, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, flexShrink:0 }}>🧱</div>
+                <div>
+                  <div style={{ fontSize:14, fontWeight:800, marginBottom:3 }}>Dealing with Barriers</div>
+                  <div style={{ fontSize:12, opacity:0.9, lineHeight:1.4 }}>Motivational tools to break through what's holding you back</div>
+                </div>
+              </div>
+              <div style={{ fontSize:18, opacity:0.7, position:"relative" }}>›</div>
+            </button>
+
             <div style={{ background:"#fff", borderRadius:16, padding:20, marginTop:16, boxShadow:"0 2px 8px rgba(0,0,0,0.06)", borderTop:`3px solid ${GOLD}` }}>
               <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:12 }}>
                 <div style={{ width:50, height:50, borderRadius:12, background:GRAD, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><PsycoveryLogo size={36}/></div>
@@ -1943,7 +1945,7 @@ export default function App() {
           <div style={{ padding:20 }}>
             <button onClick={()=>setScreen("goalLibrary")} style={{ width:"100%", background:"#fff", border:`2px dashed ${BLUE}`, borderRadius:14, padding:"12px 16px", cursor:"pointer", textAlign:"left", marginBottom:12, display:"flex", alignItems:"center", gap:10 }}>
               <span style={{ fontSize:20 }}>📖</span>
-              <div><div style={{ fontSize:13, fontWeight:700, color:BLUE }}>Browse Goal Library</div><div style={{ fontSize:11, color:"#999" }}>Specialist goals across 8 categories</div></div>
+              <div><div style={{ fontSize:13, fontWeight:700, color:BLUE }}>Browse Goal Library</div><div style={{ fontSize:11, color:"#999" }}>Specialist goals across 9 categories</div></div>
             </button>
             <button onClick={()=>setShowSuggester(true)} style={{ width:"100%", background:`linear-gradient(135deg,#1a1a2e,#2c3e50)`, border:"none", borderRadius:14, padding:"12px 16px", cursor:"pointer", textAlign:"left", marginBottom:16, display:"flex", alignItems:"center", gap:10, boxShadow:"0 4px 14px rgba(0,0,0,0.16)" }}>
               <div style={{ width:36, height:36, borderRadius:10, background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>✨</div>
@@ -2182,6 +2184,60 @@ export default function App() {
                 <button onClick={()=>{setBooked(false);setSelectedPlan(null);setScreen("home");}} style={{ marginTop:20, background:GRAD, border:"none", borderRadius:14, padding:"12px 24px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer" }}>Back to Home</button>
               </div>
             )}
+          </div>
+        </>
+      )}
+
+
+      {screen==="barriers"&&(
+        <>
+          <div style={{ background:`linear-gradient(135deg,#E8873A,#c0622a)`, padding:"16px 20px 32px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+              <div style={{ width:30, height:30, borderRadius:8, background:"rgba(255,255,255,0.15)", display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={22}/></div>
+              <div style={{ fontSize:10, color:"rgba(255,255,255,0.8)" }}>Hope Forward · <span style={{ fontWeight:700 }}>Psycovery</span></div>
+            </div>
+            <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:8 }}>
+              <div style={{ width:48, height:48, borderRadius:14, background:"rgba(255,255,255,0.18)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:26, flexShrink:0 }}>🧱</div>
+              <div>
+                <div style={{ fontSize:22, fontWeight:800, color:"#fff" }}>Dealing with Barriers</div>
+                <div style={{ fontSize:12, color:"rgba(255,255,255,0.8)", marginTop:2 }}>Every barrier has a way through it</div>
+              </div>
+            </div>
+            <div style={{ background:"rgba(255,255,255,0.15)", borderRadius:12, padding:"10px 14px", fontSize:13, color:"rgba(255,255,255,0.9)", lineHeight:1.55, fontStyle:"italic" }}>
+              "A barrier is not a wall — it is a door you haven't found the handle to yet."
+            </div>
+          </div>
+          <div style={{ padding:"0 20px", marginTop:-16, paddingBottom:80 }}>
+            {Object.entries(BARRIERS_BY_CATEGORY).map(([cat, barriers], ci)=>{
+              const col = categoryColors[cat] || "#E8873A";
+              const icon = categoryIcons[cat] || "🧱";
+              const isOpen = barrierGoalId === cat;
+              return (
+                <div key={ci} style={{ marginBottom:10 }}>
+                  <button onClick={()=>setBarrierGoalId(isOpen ? null : cat)}
+                    style={{ width:"100%", background:"#fff", border:"none", borderRadius:14, padding:"14px 16px", cursor:"pointer", textAlign:"left", boxShadow:"0 2px 8px rgba(0,0,0,0.06)", display:"flex", alignItems:"center", justifyContent:"space-between", borderLeft:`4px solid ${col}` }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                      <div style={{ width:36, height:36, borderRadius:10, background:`${col}18`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>{icon}</div>
+                      <div>
+                        <div style={{ fontSize:14, fontWeight:700, color:"#333" }}>{cat}</div>
+                        <div style={{ fontSize:11, color:"#aaa", marginTop:1 }}>{barriers.length} common barriers</div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize:16, color:"#ccc" }}>{isOpen ? "▲" : "▼"}</div>
+                  </button>
+                  {isOpen&&(
+                    <div style={{ background:"#fff", borderRadius:"0 0 14px 14px", padding:"4px 16px 16px", marginTop:-4, boxShadow:"0 4px 12px rgba(0,0,0,0.06)" }}>
+                      {barriers.map((b, bi)=>(
+                        <div key={bi} style={{ background:"#fff8f3", borderRadius:12, padding:"12px 14px", marginBottom:8, borderLeft:`3px solid ${col}` }}>
+                          <div style={{ fontSize:12, fontWeight:700, color:col, marginBottom:5 }}>🧱 {b.barrier}</div>
+                          <div style={{ fontSize:12, color:"#555", lineHeight:1.6 }}>💡 {b.tip}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </>
       )}
