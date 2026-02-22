@@ -79,11 +79,11 @@ const SEED_USERS = [
 
 const categoryColors = {
   "Probation & Supervision":"#c0392b", Housing:BLUE, Employment:ORANGE,
-  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50",
+  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5", "Dealing with Barriers":"#E8873A",
 };
 const categoryIcons = {
   "Probation & Supervision":"⚖️", Housing:"🏠", Employment:"💼",
-  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱",
+  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️", "Dealing with Barriers":"🧱",
 };
 
 const SERVICE_CATEGORIES = ["Housing","Employment","Mental Health","Substance Use","Legal & Probation","Family Support","Food & Finance","Education & Training","Health","Community"];
@@ -122,17 +122,178 @@ const goalLibrary = {
   "Probation & Supervision":[
     { title:"Never miss a probation appointment", steps:["Set phone reminders 24hrs before each appointment","Keep a written log of all check-in dates","Build a transport plan so I always arrive on time"] },
     { title:"Complete all licence conditions successfully", steps:["List every condition clearly and review weekly","Speak to my probation officer if I'm struggling","Check in with a trusted person each week for accountability"] },
+    { title:"Build a positive relationship with my probation officer", steps:["Arrive on time and prepared for every meeting","Be honest about any challenges I am facing","Ask my probation officer what support is available to me"] },
+    { title:"Understand all my legal obligations", steps:["Request a written copy of all my licence conditions","Read through each condition and note any I am unsure about","Ask my solicitor or probation officer to explain anything unclear"] },
+    { title:"Stay out of trouble during my licence period", steps:["Identify the people and places that put me at risk","Create a daily routine that keeps me busy and focused","Contact my probation officer immediately if I feel at risk of reoffending"] },
+    { title:"Successfully complete my unpaid work requirement", steps:["Confirm my unpaid work schedule with my probation officer","Set reminders and arrange transport for each session","Approach each session with a positive attitude and good timekeeping"] },
+    { title:"Complete an accredited offending behaviour programme", steps:["Ask my probation officer which programmes I am eligible for","Enrol in the next available programme","Attend every session and engage honestly with the material"] },
+    { title:"Prepare for the end of my licence", steps:["Discuss my end-of-licence plan with my probation officer","Identify ongoing support I want to keep in place after supervision ends","Write down my goals for the 6 months after licence completion"] },
   ],
-  Housing:[{ title:"Secure stable long-term accommodation", steps:["Research local housing options and eligibility","Apply for social housing or housing benefit","Build a good relationship with my landlord"] }],
+  Housing:[
+    { title:"Secure stable long-term accommodation", steps:["Research local housing options and eligibility","Apply for social housing or housing benefit","Build a good relationship with my landlord"] },
+    { title:"Get my name on the social housing register", steps:["Contact my local council housing department","Complete the housing register application with supporting documents","Follow up every 4 weeks to check my application status"] },
+    { title:"Find emergency or temporary accommodation", steps:["Contact Shelter or a local homelessness charity today","Ask my probation officer about approved premises or halfway houses","Register with the local council as homeless to access priority support"] },
+    { title:"Move into my own private rented flat", steps:["Save enough for a deposit and first month's rent","Search for landlords who accept DSS or have no conviction restrictions","Get a reference from a support worker or probation officer"] },
+    { title:"Keep my tenancy and avoid eviction", steps:["Pay rent on time every month and keep a record of payments","Report any repairs to my landlord in writing","Know my rights as a tenant and contact Shelter if I receive an eviction notice"] },
+    { title:"Make my home feel safe and comfortable", steps:["Set up essential utilities — gas, electric, broadband","Apply for a Community Care Grant or Household Support Fund for furniture","Build a small emergency fund for unexpected household costs"] },
+    { title:"Understand my housing benefit entitlement", steps:["Check my eligibility for Universal Credit housing element on gov.uk","Gather proof of address, ID and tenancy agreement","Submit my claim and report any changes in circumstances promptly"] },
+    { title:"Live independently for the first time", steps:["Learn basic cooking, budgeting and household skills","Connect with a local support organisation for independent living guidance","Set up direct debits so bills are paid automatically"] },
+  ],
   Employment:[
     { title:"Find a job I'm proud of", steps:["Identify my skills and what I enjoy doing","Search for Ban the Box employers in my area","Apply for at least 3 jobs this week"] },
     { title:"Update my CV and cover letter", steps:["List my work history, skills and achievements","Get my CV reviewed by a careers adviser","Tailor my cover letter to each job I apply for"] },
+    { title:"Disclose my conviction confidently to employers", steps:["Learn the Rehabilitation of Offenders Act rules on what I must disclose","Write a short honest statement about my conviction and what I have learned","Practise saying it out loud so I feel confident in interviews"] },
+    { title:"Find a Ban the Box employer", steps:["Search the Ban the Box employer list at bitc.org.uk","Identify 5 employers in my area or sector who have signed up","Apply directly and mention in my cover letter that I value their commitment"] },
+    { title:"Complete a vocational training course", steps:["Research free courses through my local college or National Careers Service","Enrol in a course that matches a job I want","Complete all assignments and obtain my certificate"] },
+    { title:"Start my own business", steps:["Research my business idea and identify who my customers would be","Contact the Prince's Trust or New Enterprise Allowance for funding support","Write a simple one-page business plan"] },
+    { title:"Prepare for job interviews", steps:["Research common interview questions and write out my answers","Practise with a friend, support worker or careers adviser","Plan my outfit, route and arrival time the day before"] },
+    { title:"Build a professional network", steps:["Create or update my LinkedIn profile","Attend a local job fair or employment event","Reach out to one new professional contact each week"] },
+    { title:"Get a reference I can use for job applications", steps:["Ask my probation officer, support worker or volunteer supervisor","Brief them on the type of work I am applying for","Thank them and keep them updated on my job search progress"] },
+    { title:"Move from benefits into paid work", steps:["Speak to a work coach at my local jobcentre about the transition","Use the benefits calculator on Turn2Us to understand what I will keep","Negotiate a start date that gives me time to manage the changeover"] },
   ],
-  Education:[{ title:"Get my maths or English qualification", steps:["Find a local adult education centre offering free courses","Enrol in a GCSE or Functional Skills course","Study for at least 30 minutes every day"] }],
-  Family:[{ title:"Rebuild my relationship with my children", steps:["Contact my children's carer to discuss contact arrangements","Attend every scheduled contact session","Be consistent, patient and honest with my children"] }],
-  Health:[{ title:"Register with a GP", steps:["Find my nearest GP surgery","Complete a registration form in person or online","Book a new patient health check"] }],
-  Finance:[{ title:"Open a bank account", steps:["Find a bank that accepts basic ID","Gather required documents — ID and proof of address","Visit a branch or apply online"] }],
-  Identity:[{ title:"Discover who I am beyond my past", steps:["Write down 5 values that matter to me","Try a new activity that reflects those values","Talk to a counsellor or mentor about my identity"] }],
+  Education:[
+    { title:"Get my maths or English qualification", steps:["Find a local adult education centre offering free courses","Enrol in a GCSE or Functional Skills course","Study for at least 30 minutes every day"] },
+    { title:"Complete a course that leads to a job I want", steps:["Research which qualifications are needed for my chosen career","Find a free or funded course through my local college or online","Commit to attending every session and completing all coursework"] },
+    { title:"Improve my reading and writing skills", steps:["Contact my local library or adult education centre about literacy classes","Download a free learning app such as BBC Skillswise","Set aside 20 minutes a day to practise reading something I enjoy"] },
+    { title:"Get a digital skills qualification", steps:["Find a free digital skills course through Learn My Way or a local college","Complete modules on using email, internet and basic software","Apply my new skills to job searching or managing my finances online"] },
+    { title:"Explore university or higher education", steps:["Contact UCAS or a local university's widening participation team","Research courses and funding options including student loans","Request a conversation with an admissions tutor about my background"] },
+    { title:"Volunteer to gain experience and skills", steps:["Search for volunteering opportunities on Do-It.org or NCVO","Choose a role that builds skills relevant to my goals","Commit to a regular volunteering schedule for at least 3 months"] },
+    { title:"Learn a trade or skilled craft", steps:["Research apprenticeships or trade courses in my area","Contact a local construction, catering or engineering employer about training","Apply for a funded traineeship or apprenticeship through gov.uk"] },
+    { title:"Complete a prison education qualification I started", steps:["Contact the prison education department to request my records","Find a local college that will recognise my prior learning","Re-enrol and complete the remaining modules"] },
+  ],
+  Family:[
+    { title:"Rebuild my relationship with my children", steps:["Contact my children's carer to discuss contact arrangements","Attend every scheduled contact session","Be consistent, patient and honest with my children"] },
+    { title:"Repair my relationship with my parents or siblings", steps:["Write a letter or make a phone call to start the conversation","Acknowledge the impact my actions had on them without making excuses","Suggest a regular time to meet or speak and stick to it"] },
+    { title:"Establish safe and regular contact with my children", steps:["Speak to a family solicitor or Cafcass about my contact rights","Apply to the family court for a child arrangements order if needed","Keep a diary of all contact to demonstrate my commitment"] },
+    { title:"Support my children's education and development", steps:["Attend parents' evenings and school events whenever possible","Ask my children about their school day and show genuine interest","Read with or help my children with homework regularly"] },
+    { title:"Address the impact of my conviction on my family", steps:["Have an honest age-appropriate conversation with my children","Seek family therapy or mediation through a local service","Read about how to talk to children about parental imprisonment"] },
+    { title:"Build a stable home environment for my family", steps:["Secure safe and suitable housing before family reunification","Establish consistent daily routines and boundaries","Attend a parenting programme to build my confidence and skills"] },
+    { title:"Reconnect with a trusted friend or mentor", steps:["Identify one person from my past who had a positive influence","Reach out with a phone call or message","Meet up regularly and be honest about where I am in my journey"] },
+    { title:"Set healthy boundaries with people who put me at risk", steps:["Write a list of people who are a positive versus negative influence","Practise how I will say no or step back from harmful relationships","Ask my support worker to help me manage these conversations"] },
+  ],
+  Health:[
+    { title:"Register with a GP", steps:["Find my nearest GP surgery","Complete a registration form in person or online","Book a new patient health check"] },
+    { title:"Address my mental health and get support", steps:["Talk to my GP about how I am feeling and ask for a referral","Contact Mind or CALM for immediate advice and support","Commit to attending all appointments and being honest about my symptoms"] },
+    { title:"Get support for alcohol or drug use", steps:["Contact Frank or a local drug and alcohol service for a confidential chat","Attend an assessment appointment to discuss my options","Build a recovery plan with a keyworker and identify my triggers"] },
+    { title:"Register with a dentist and sort my dental health", steps:["Find an NHS dentist accepting new patients on the NHS website","Book an initial check-up and be honest about my concerns","Attend follow-up appointments and start a daily brushing routine"] },
+    { title:"Improve my physical fitness and wellbeing", steps:["Join a free or low-cost gym, leisure centre or running group","Set a simple achievable exercise goal for the week","Build exercise into my daily routine so it becomes a habit"] },
+    { title:"Manage my stress in healthy ways", steps:["Identify my top 3 stress triggers and write them down","Learn one relaxation technique such as breathing exercises or mindfulness","Use a free app such as Headspace or Calm for 10 minutes each day"] },
+    { title:"Get support for trauma from my past", steps:["Speak to my GP or support worker about trauma-focused therapy","Contact a local IAPT service or charity offering free counselling","Allow myself time and self-compassion in the healing process"] },
+    { title:"Improve my sleep and daily routine", steps:["Set a consistent bedtime and wake-up time every day","Reduce screen time in the hour before bed","Create a simple evening routine that helps me wind down"] },
+    { title:"Quit smoking", steps:["Contact the NHS Stop Smoking Service for free support and medication","Set a quit date and tell someone I trust to keep me accountable","Replace the habit with a positive activity such as a short walk"] },
+    { title:"Eat better and look after my body", steps:["Plan 3 simple healthy meals I can make each week","Shop with a list to avoid buying unhealthy impulse foods","Drink more water and reduce sugary drinks"] },
+  ],
+  Finance:[
+    { title:"Open a bank account", steps:["Find a bank that accepts basic ID","Gather required documents — ID and proof of address","Visit a branch or apply online"] },
+    { title:"Claim all the benefits I am entitled to", steps:["Use the Turn2Us benefits calculator to check my entitlements","Make a list of all benefits I could claim and their deadlines","Submit claims promptly and keep copies of everything I send"] },
+    { title:"Pay off a debt or get it under control", steps:["List all my debts including amounts and interest rates","Contact StepChange or Citizens Advice for free debt advice","Set up a repayment plan I can afford and stick to it every month"] },
+    { title:"Build an emergency savings fund", steps:["Open a basic savings account or use a credit union","Save a small fixed amount each week even if it is just £5","Avoid dipping into savings unless it is a genuine emergency"] },
+    { title:"Create a weekly budget and stick to it", steps:["Write down all my income and essential outgoings","Identify where I am overspending and set realistic limits","Review my budget every Sunday and adjust as needed"] },
+    { title:"Get help with fines or court-ordered payments", steps:["Contact the court or fines office to discuss a payment plan","Ask Citizens Advice about fine remission if I cannot afford to pay","Set up a standing order so payments go out automatically"] },
+    { title:"Improve my credit score", steps:["Check my credit report for free using ClearScore or Experian","Register on the electoral roll at my current address","Make all bill and credit payments on time every month"] },
+    { title:"Understand and manage my Universal Credit claim", steps:["Log into my Universal Credit journal and check my to-do list weekly","Report any changes in my circumstances promptly to avoid overpayments","Ask my work coach about the work allowance and how to progress"] },
+    { title:"Access a food bank or community larder if needed", steps:["Ask my support worker or GP for a food bank referral","Find my nearest community larder on the Hubbub website","Use the support while I stabilise my finances without feeling ashamed"] },
+  ],
+  Identity:[
+    { title:"Discover who I am beyond my past", steps:["Write down 5 values that matter to me","Try a new activity that reflects those values","Talk to a counsellor or mentor about my identity"] },
+    { title:"Build a positive sense of self-worth", steps:["Write down 3 things I like about myself every morning","Challenge negative self-talk by asking if I would say this to a friend","Celebrate every small win no matter how minor it seems"] },
+    { title:"Define my personal values and live by them", steps:["Write a list of the values most important to me such as honesty or loyalty","Reflect each evening on whether my actions matched my values","Use my values to make decisions when I face difficult choices"] },
+    { title:"Find a sense of purpose and meaning", steps:["Ask myself what kind of person I want to be in 5 years","Explore volunteering, creative work or community involvement","Speak to a mentor or coach about what gives my life meaning"] },
+    { title:"Let go of shame and move forward", steps:["Read about the difference between guilt and shame and how they affect us","Talk to a counsellor or trusted person about feelings of shame","Write a letter of self-forgiveness that I keep private or share if I choose"] },
+    { title:"Develop a positive daily routine and structure", steps:["Write out a simple daily schedule including meals, activity and rest","Stick to the routine for one full week and notice how I feel","Adjust the routine based on what works and what does not"] },
+    { title:"Explore my cultural or spiritual identity", steps:["Research the traditions, history or faith that matter to my background","Attend a community group, place of worship or cultural event","Reflect on how my identity and heritage can be a source of strength"] },
+    { title:"Become a role model for others on a similar journey", steps:["Share my story with one person who might benefit from hearing it","Explore peer mentoring or volunteering with a reentry organisation","Recognise that my lived experience has real value and power"] },
+    { title:"Build confidence in social situations", steps:["Start with low-pressure social situations such as a community group or class","Practise small talk and making eye contact with one new person each week","Remind myself that confidence grows through action not waiting"] },
+    { title:"Create a vision for the life I want", steps:["Write or draw a description of my ideal life in 3 years","Break it down into the areas of housing, work, relationships and health","Pin it somewhere visible and read it every morning as a reminder"] },
+  ],
+  Legal:[
+    { title:"Understand my criminal record and what it means", steps:["Request a copy of my criminal record through the DBS basic disclosure service","Learn which convictions are spent under the Rehabilitation of Offenders Act 1974","Speak to Nacro or a solicitor if I am unsure what I need to disclose and when"] },
+    { title:"Get free legal advice about my situation", steps:["Contact Citizens Advice or a local law centre for a free appointment","Check if I qualify for legal aid on the gov.uk legal aid checker","Prepare a written summary of my situation before any advice appointment"] },
+    { title:"Challenge an unfair conviction or sentence", steps:["Contact the Criminal Cases Review Commission if I believe I was wrongly convicted","Speak to a solicitor about grounds for appeal within the appeal time limits","Gather any new evidence or witness statements that support my case"] },
+    { title:"Remove or reduce barriers caused by my criminal record", steps:["Use Nacro's criminal record support service for personalised guidance","Check whether my conviction is spent and no longer needs to be disclosed","Write a confident disclosure statement for job applications with help from Nacro"] },
+    { title:"Understand my rights when dealing with police", steps:["Learn my right to remain silent and right to a solicitor if arrested","Keep a note of any police interactions including date, time and officers involved","Contact a solicitor or Liberty if I believe my rights have been violated"] },
+    { title:"Sort out any outstanding fines or court orders", steps:["Contact the court to get a full breakdown of what I owe","Ask Citizens Advice about applying to reduce or remit fines I cannot afford","Set up a manageable payment plan and get written confirmation from the court"] },
+    { title:"Navigate a restraining order or civil injunction", steps:["Read the order carefully and note every condition and its boundaries","Seek urgent legal advice if I am unsure what the order permits","Keep a daily log of my whereabouts in case of any future disputes"] },
+    { title:"Get my driving licence back after disqualification", steps:["Check my disqualification end date with the DVLA","Complete any required extended driving test or drink-drive rehabilitation course","Apply to the DVLA to restore my licence once the period has ended"] },
+    { title:"Understand the sex offenders register and my obligations", steps:["Get a full written explanation of my notification requirements from police","Set reminders for all annual registration appointments","Speak to a solicitor about applying for removal from the register after the eligible period"] },
+    { title:"Plan for life after a Serious Crime Prevention Order or SHPO", steps:["Get a written copy of all conditions and review them with a solicitor","Build a daily routine that clearly keeps me within the order's requirements","Apply to vary or discharge conditions that prevent legitimate work or housing once eligible"] },
+  ],
+  "Dealing with Barriers":[
+    { title:"Turn rejection into resilience", steps:["Write down the last time I was rejected and what I learned from it","Remind myself that rejection is a redirection not a verdict on my worth","Set a goal to try again within 48 hours of any setback — momentum beats hesitation"] },
+    { title:"Overcome the fear of judgement from others", steps:["Write a list of the people whose opinion genuinely matters to my future","Practise responding to stigma with calm confidence — prepare a short honest statement","Remember that most people are focused on their own challenges, not mine"] },
+    { title:"Break through a mental block that is holding me back", steps:["Name the block clearly — is it fear, shame, uncertainty or lack of information?","Talk to someone I trust about the barrier and ask if they see a way through","Take the smallest possible action towards the thing I have been avoiding"] },
+    { title:"Deal with discrimination in the job market", steps:["Research my rights under the Equality Act and the Rehabilitation of Offenders Act","Document any unfair treatment in writing with dates and details","Contact Nacro or Citizens Advice to explore whether I have grounds for a complaint"] },
+    { title:"Stop letting my past define my future", steps:["Write two lists — what I have been through and who I am choosing to become","Share my story with one trusted person as an act of reclaiming my own narrative","Replace the phrase 'I am my record' with 'I am what I do next' as a daily affirmation"] },
+    { title:"Build hope when everything feels hopeless", steps:["Identify one small area of my life where I do have control and focus there first","Contact a peer mentor or support group of others who have faced similar challenges","Write down three things — however small — that went right today"] },
+    { title:"Manage setbacks without giving up", steps:["Expect that the path forward will not be straight — setbacks are part of every journey","Create a personal 'recovery plan' — a list of 3 things I will do when I hit a low point","Call or message a trusted person within 24 hours of a significant setback"] },
+    { title:"Handle stress without falling back on old habits", steps:["Identify my top 3 stress triggers and the habits they tempt me towards","Replace each trigger with a planned healthy response — exercise, a call, fresh air","Talk to my support worker or GP about stress management and coping strategies"] },
+    { title:"Push through the shame of asking for help", steps:["Remind myself that asking for help is a sign of strength not weakness","Write a list of the people and organisations that exist specifically to help me","Make one call or send one message today — the hardest part is always the first step"] },
+    { title:"Stay motivated when progress feels slow", steps:["Look back at where I started and write down every change however small","Break my big goal into weekly targets so I can see movement every 7 days","Find one person further along the same journey and let their progress inspire mine"] },
+  ],
+};
+
+
+const BARRIERS_BY_CATEGORY = {
+  "Probation & Supervision":[
+    { barrier:"Fear of being judged by my probation officer", tip:"Your probation officer has seen every situation — honesty builds trust and gets you better support." },
+    { barrier:"Anxiety about missing an appointment", tip:"Set two reminders: one 24hrs before and one 2hrs before. Plan your route the day before." },
+    { barrier:"Feeling like the system is against me", tip:"Focus on what you can control — your attendance, your honesty, your effort. That's what builds a positive record." },
+    { barrier:"Not understanding my licence conditions", tip:"Write them down and ask your PO to explain anything unclear. Knowing the rules clearly reduces anxiety." },
+  ],
+  Housing:[
+    { barrier:"Landlords refusing me due to my record", tip:"Focus on Ban the Box landlords and housing associations — many exist specifically to help people in your situation." },
+    { barrier:"Not knowing where to start", tip:"Shelter's free helpline (0808 800 4444) can map out your options in one call. You don't have to figure this out alone." },
+    { barrier:"Feeling ashamed to ask for housing support", tip:"Housing services exist for exactly this moment. Asking is the strongest move you can make right now." },
+    { barrier:"Previous evictions or rent arrears on my record", tip:"Many councils must still house you in priority need. Get advice from Citizens Advice before giving up." },
+  ],
+  Employment:[
+    { barrier:"Employers rejecting me because of my conviction", tip:"One no is not all nos. There are thousands of Ban the Box employers — each rejection narrows the search to those who will say yes." },
+    { barrier:"Not feeling good enough", tip:"Your resilience, life experience and determination are genuinely rare qualities that many employers value enormously." },
+    { barrier:"Gaps in my employment history", tip:"Volunteering, training, caregiving and personal development all count. Frame your gap as a period of growth." },
+    { barrier:"Feeling overwhelmed by the job search", tip:"Apply for one job today, not ten. One honest application beats ten rushed ones every time." },
+  ],
+  Education:[
+    { barrier:"Feeling too old or too behind to learn", tip:"Adult learners bring life experience that younger students don't have. Every teacher knows that makes you an asset." },
+    { barrier:"Bad memories of school", tip:"Adult education is nothing like school. You choose your pace, your subject and your environment." },
+    { barrier:"Not believing I am intelligent enough", tip:"Intelligence is not fixed — it grows with effort. The people who succeed are those who keep going, not those who started ahead." },
+    { barrier:"Struggling to find time to study", tip:"Even 20 minutes a day adds up to over 120 hours a year. Consistency beats intensity every time." },
+  ],
+  Family:[
+    { barrier:"Fear of rejection from my family", tip:"Reaching out takes courage. Whether they respond immediately or not, making contact is a step that speaks for itself." },
+    { barrier:"Guilt about the impact of my actions on loved ones", tip:"Guilt tells you that you care. Channel it into consistent actions — showing up, being honest, being reliable." },
+    { barrier:"Not knowing what to say after a long absence", tip:"You don't need the perfect words. 'I've been thinking about you and I want to do better' is enough to start." },
+    { barrier:"Court orders limiting my contact with my children", tip:"Document everything, attend every permitted contact, and work with a family solicitor to build a positive record over time." },
+  ],
+  Health:[
+    { barrier:"Not feeling worth the effort of looking after myself", tip:"Every step you take to care for yourself is an act of defiance against every setback you have faced. You are worth it." },
+    { barrier:"Fear of what a doctor might find or judge", tip:"GPs are bound by confidentiality. They have seen everything. Their job is to help, not judge." },
+    { barrier:"Using substances to cope with stress", tip:"That coping strategy made sense at the time. There are other tools now — speak to your GP or a keyworker this week." },
+    { barrier:"Mental health affecting my motivation", tip:"On the hardest days, the goal is just one small thing. Get up, drink water, step outside. Small actions rebuild momentum." },
+  ],
+  Finance:[
+    { barrier:"Debt that feels impossible to repay", tip:"Debt doesn't disappear by avoiding it — but it does shrink with a plan. StepChange will help you build one for free." },
+    { barrier:"No ID to open a bank account", tip:"Most banks accept a combination of documents. Monzo and Starling are known to be flexible for people in your situation." },
+    { barrier:"Feeling too ashamed to claim benefits", tip:"You have paid into the system. Claiming support you are entitled to is not charity — it is yours." },
+    { barrier:"Not trusting financial institutions after negative experiences", tip:"A basic bank account or credit union is a tool, not a trap. Start small and build from there." },
+  ],
+  Identity:[
+    { barrier:"Feeling permanently defined by my worst moment", tip:"Your worst moment is one data point in a whole life. Who you are today — choosing to grow — is louder than your past." },
+    { barrier:"Not knowing who I am outside of old habits and roles", tip:"Identity is built through action. Try one new thing this week. You discover who you are by becoming them." },
+    { barrier:"Internalised shame making me feel worthless", tip:"Shame thrives in silence. Talk to one trusted person — a mentor, support worker or counsellor. Spoken, it loses its power." },
+    { barrier:"Struggling to believe change is possible for me", tip:"The fact that you are here, reading this, setting goals — that is already evidence that change is happening." },
+  ],
+  Legal:[
+    { barrier:"Not understanding my rights", tip:"Ignorance of the law is never your fault when no one has explained it. Nacro and Citizens Advice are free and confidential." },
+    { barrier:"Fear of engaging with the legal system again", tip:"Knowing your rights protects you. Engaging from a position of knowledge is very different from when you had none." },
+    { barrier:"Feeling like the system will never be fair to me", tip:"The system is imperfect — that is true. But within it there are solicitors, advocates and organisations fighting for people like you." },
+    { barrier:"Outstanding legal issues causing anxiety", tip:"Unresolved issues feel bigger when avoided. One free legal advice appointment can turn anxiety into a clear action plan." },
+  ],
+  "Dealing with Barriers":[
+    { barrier:"Feeling like barriers are permanent", tip:"Every barrier you name is a barrier you can plan around. The ones that stop you are the ones you never identify." },
+    { barrier:"Comparing my progress to others", tip:"You are not running anyone else's race. Your starting line was different. Your pace is your own." },
+    { barrier:"Losing hope after repeated setbacks", tip:"Hope is not a feeling — it is a practice. Name one goal, name one step, take it. That is how hope is rebuilt." },
+    { barrier:"Not feeling ready to start", tip:"Readiness is a myth. You will never feel fully ready. The start itself creates the readiness." },
+  ],
 };
 
 const initialGoals = [
@@ -1335,8 +1496,9 @@ export default function App() {
   const [onboarded, setOnboarded] = useState(false);
   const [slide, setSlide] = useState(0);
   const [screen, setScreen] = useState("home");
-  const [goals, setGoals] = useState(initialGoals);
+  const [goals, setGoals] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const [barrierGoalId, setBarrierGoalId] = useState(null);
   const [newGoal, setNewGoal] = useState({ title:"", category:"Probation & Supervision", step1:"", step2:"", step3:"" });
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [booked, setBooked] = useState(false);
@@ -1359,6 +1521,7 @@ export default function App() {
   const [showSuggester, setShowSuggester] = useState(false);
   const [showHopePlan, setShowHopePlan] = useState(false);
   const [purchasedHopePlan, setPurchasedHopePlan] = useState(false);
+  const [hideEmergency, setHideEmergency] = useState(false);
 
   const overallProgress = goals.length ? Math.round(goals.reduce((a,g)=>a+g.agency,0)/goals.length) : 0;
   const displayName = profile.preferredName || profile.firstName || "there";
@@ -1796,7 +1959,20 @@ export default function App() {
                 <div style={{ background:"#f0f0f0", borderRadius:99, height:6, marginTop:10, marginBottom:12 }}>
                   <div style={{ background:GOLD, borderRadius:99, height:6, width:`${g.agency}%`, transition:"width 0.4s" }}/>
                 </div>
-                {g.steps.map((s,i)=>(
+                {/* Tab switcher */}
+                <div style={{ display:"flex", background:"#f4f7fb", borderRadius:10, padding:3, marginBottom:12 }}>
+                  {["Steps","Barriers"].map(tab=>(
+                    <button key={tab} onClick={()=>setBarrierGoalId(barrierGoalId===g.id&&tab==="Barriers"?null:tab==="Barriers"?g.id:null)}
+                      style={{ flex:1, padding:"7px 0", border:"none", borderRadius:8, cursor:"pointer", fontSize:12, fontWeight:700, transition:"all 0.15s",
+                        background: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? "#fff" : "transparent",
+                        color: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? (tab==="Barriers"?"#E8873A":BLUE) : "#aaa",
+                        boxShadow: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? "0 1px 4px rgba(0,0,0,0.10)" : "none" }}>
+                      {tab==="Barriers"?"🧱 Barriers":"✅ Steps"}
+                    </button>
+                  ))}
+                </div>
+                {/* Steps tab */}
+                {barrierGoalId!==g.id&&g.steps.map((s,i)=>(
                   <div key={i} onClick={()=>toggleStep(g.id,i)} style={{ display:"flex", alignItems:"center", gap:10, padding:"7px 0", cursor:"pointer", borderBottom:i<g.steps.length-1?"1px solid #f5f5f5":"none" }}>
                     <div style={{ width:20, height:20, borderRadius:6, border:`2px solid ${g.completed[i]?BLUE:"#ddd"}`, background:g.completed[i]?BLUE:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
                       {g.completed[i]&&<span style={{ color:"#fff", fontSize:12, fontWeight:800 }}>✓</span>}
@@ -1804,6 +1980,17 @@ export default function App() {
                     <div style={{ fontSize:13, color:g.completed[i]?"#aaa":"#333", textDecoration:g.completed[i]?"line-through":"none" }}>{s}</div>
                   </div>
                 ))}
+                {/* Barriers tab */}
+                {barrierGoalId===g.id&&(
+                  <div>
+                    {(BARRIERS_BY_CATEGORY[g.category]||BARRIERS_BY_CATEGORY["Dealing with Barriers"]).map((b,i)=>(
+                      <div key={i} style={{ background:"#fff8f0", borderRadius:12, padding:"11px 13px", marginBottom:8, borderLeft:"3px solid #E8873A" }}>
+                        <div style={{ fontSize:12, fontWeight:700, color:"#c0622a", marginBottom:4 }}>🧱 {b.barrier}</div>
+                        <div style={{ fontSize:12, color:"#555", lineHeight:1.55 }}>💡 {b.tip}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
             <button onClick={()=>setScreen("addGoal")} style={{ width:"100%", background:GRAD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>+ Write My Own Goal</button>
@@ -2035,13 +2222,30 @@ export default function App() {
       )}
 
       {screen!=="emergency"&&(
-        <button onClick={()=>setScreen("emergency")} style={{ position:"fixed", bottom:80, left:"50%", transform:"translateX(-50%)", width:"calc(100% - 40px)", maxWidth:350, background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:16, padding:"14px 20px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer", boxShadow:"0 6px 20px rgba(192,57,43,0.45)", display:"flex", alignItems:"center", justifyContent:"space-between", zIndex:99 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:10, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>🆘</div>
-            <div style={{ textAlign:"left" }}><div style={{ fontSize:14, fontWeight:800 }}>Emergency Support</div><div style={{ fontSize:11, opacity:0.85, fontWeight:400 }}>Free 24/7 crisis help available now</div></div>
+        hideEmergency ? (
+          // Minimised pill — tap to restore
+          <button onClick={()=>setHideEmergency(false)} style={{ position:"fixed", bottom:80, right:16, background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:99, padding:"8px 14px", color:"#fff", fontSize:12, fontWeight:800, cursor:"pointer", boxShadow:"0 4px 14px rgba(192,57,43,0.5)", display:"flex", alignItems:"center", gap:6, zIndex:99 }}>
+            <span style={{ fontSize:14 }}>🆘</span>
+            <span>Crisis Help</span>
+          </button>
+        ) : (
+          <div style={{ position:"fixed", bottom:80, left:"50%", transform:"translateX(-50%)", width:"calc(100% - 40px)", maxWidth:350, zIndex:99, display:"flex", flexDirection:"column", gap:0 }}>
+            {/* Hide button */}
+            <div style={{ display:"flex", justifyContent:"flex-end", marginBottom:4 }}>
+              <button onClick={()=>setHideEmergency(true)} style={{ background:"rgba(0,0,0,0.18)", border:"none", borderRadius:99, padding:"3px 10px", color:"#fff", fontSize:10, fontWeight:700, cursor:"pointer", backdropFilter:"blur(4px)" }}>
+                Hide ✕
+              </button>
+            </div>
+            {/* Main button */}
+            <button onClick={()=>setScreen("emergency")} style={{ width:"100%", background:"linear-gradient(135deg,#c0392b,#e74c3c)", border:"none", borderRadius:16, padding:"14px 20px", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer", boxShadow:"0 6px 20px rgba(192,57,43,0.45)", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:10, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>🆘</div>
+                <div style={{ textAlign:"left" }}><div style={{ fontSize:14, fontWeight:800 }}>Emergency Support</div><div style={{ fontSize:11, opacity:0.85, fontWeight:400 }}>Free 24/7 crisis help available now</div></div>
+              </div>
+              <div style={{ fontSize:18, opacity:0.8 }}>›</div>
+            </button>
           </div>
-          <div style={{ fontSize:18, opacity:0.8 }}>›</div>
-        </button>
+        )
       )}
 
       <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:390, background:"#fff", borderTop:"1px solid #f0f0f0", display:"flex", padding:"8px 0" }}>
