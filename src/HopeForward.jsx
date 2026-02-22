@@ -1653,36 +1653,18 @@ export default function App() {
               ))}
             </div>
 
-            <button onClick={()=>setScreen("coaching")} style={{ width:"100%", marginTop:12, background:GRAD_GOLD, border:"none", borderRadius:16, padding:"20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:`0 6px 20px ${GOLD}55`, position:"relative", overflow:"hidden" }}>
-              {/* decorative circles */}
-              <div style={{ position:"absolute", top:-24, right:-24, width:100, height:100, borderRadius:"50%", background:"rgba(255,255,255,0.1)" }}/>
-              <div style={{ position:"absolute", bottom:-20, right:60, width:70, height:70, borderRadius:"50%", background:"rgba(255,255,255,0.07)" }}/>
-              {/* top row */}
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12, position:"relative" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-                  <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:10, width:42, height:42, display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={30}/></div>
-                  <div>
-                    <div style={{ fontSize:16, fontWeight:900, letterSpacing:"-0.3px" }}>Psycovery Hope Coach</div>
-                    <div style={{ fontSize:10, opacity:0.85, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.5px" }}>Specialist 1:1 Coaching</div>
-                  </div>
+            {/* Dealing with Barriers card */}
+            <button onClick={()=>setScreen("barriers")} style={{ width:"100%", marginTop:12, background:"linear-gradient(135deg,#E8873A,#c0622a)", border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:"0 6px 20px rgba(232,135,58,0.35)", display:"flex", justifyContent:"space-between", alignItems:"center", position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:-20, right:-20, width:90, height:90, borderRadius:"50%", background:"rgba(255,255,255,0.08)" }}/>
+              <div style={{ position:"absolute", bottom:-24, right:50, width:60, height:60, borderRadius:"50%", background:"rgba(255,255,255,0.06)" }}/>
+              <div style={{ display:"flex", alignItems:"center", gap:12, position:"relative" }}>
+                <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:12, width:46, height:46, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, flexShrink:0 }}>🧱</div>
+                <div>
+                  <div style={{ fontSize:14, fontWeight:800, marginBottom:3 }}>Dealing with Barriers</div>
+                  <div style={{ fontSize:12, opacity:0.9, lineHeight:1.4 }}>Motivational tools to break through what's holding you back</div>
                 </div>
-                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"4px 10px", fontSize:10, fontWeight:800 }}>From £75</div>
               </div>
-              {/* sales line */}
-              <div style={{ fontSize:13, lineHeight:1.55, opacity:0.95, marginBottom:12, position:"relative" }}>
-                Real change takes more than an app. A dedicated Psycovery coach works with you 1:1 to rebuild your goals, break through your barriers and stay on track.
-              </div>
-              {/* feature pills */}
-              <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:14, position:"relative" }}>
-                {["✅ Hope Theory specialist","✅ Criminal justice focus","✅ Flexible sessions","✅ Real results"].map(f=>(
-                  <div key={f} style={{ background:"rgba(255,255,255,0.2)", borderRadius:99, padding:"4px 10px", fontSize:11, fontWeight:600 }}>{f}</div>
-                ))}
-              </div>
-              {/* CTA row */}
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative" }}>
-                <div style={{ fontSize:12, opacity:0.85 }}>Sessions available by phone or video</div>
-                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"7px 16px", fontSize:13, fontWeight:800 }}>Book Now ›</div>
-              </div>
+              <div style={{ fontSize:18, opacity:0.7, position:"relative" }}>›</div>
             </button>
             {/* Guided Hope Plan IAP */}
             <button onClick={()=>setShowHopePlan(true)} style={{ width:"100%", marginTop:12, background:"linear-gradient(135deg,#0f2027,#203a43,#2c5364)", border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", justifyContent:"space-between", alignItems:"center", position:"relative", overflow:"hidden" }}>
@@ -1702,18 +1684,32 @@ export default function App() {
               </div>
               <div style={{ fontSize:18, opacity:0.6, position:"relative" }}>›</div>
             </button>
-            {/* Dealing with Barriers card */}
-            <button onClick={()=>setScreen("barriers")} style={{ width:"100%", marginTop:12, background:"linear-gradient(135deg,#E8873A,#c0622a)", border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:"0 6px 20px rgba(232,135,58,0.35)", display:"flex", justifyContent:"space-between", alignItems:"center", position:"relative", overflow:"hidden" }}>
-              <div style={{ position:"absolute", top:-20, right:-20, width:90, height:90, borderRadius:"50%", background:"rgba(255,255,255,0.08)" }}/>
-              <div style={{ position:"absolute", bottom:-24, right:50, width:60, height:60, borderRadius:"50%", background:"rgba(255,255,255,0.06)" }}/>
-              <div style={{ display:"flex", alignItems:"center", gap:12, position:"relative" }}>
-                <div style={{ background:"rgba(255,255,255,0.2)", borderRadius:12, width:46, height:46, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24, flexShrink:0 }}>🧱</div>
-                <div>
-                  <div style={{ fontSize:14, fontWeight:800, marginBottom:3 }}>Dealing with Barriers</div>
-                  <div style={{ fontSize:12, opacity:0.9, lineHeight:1.4 }}>Motivational tools to break through what's holding you back</div>
+            {/* Psycovery Hope Coach */}
+            <button onClick={()=>setScreen("coaching")} style={{ width:"100%", marginTop:12, background:GRAD_GOLD, border:"none", borderRadius:16, padding:"16px 18px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:`0 4px 14px ${GOLD}44`, position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:-20, right:-20, width:90, height:90, borderRadius:"50%", background:"rgba(255,255,255,0.1)" }}/>
+              <div style={{ position:"absolute", bottom:-18, right:55, width:60, height:60, borderRadius:"50%", background:"rgba(255,255,255,0.07)" }}/>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8, position:"relative" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:9 }}>
+                  <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:9, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={26}/></div>
+                  <div>
+                    <div style={{ fontSize:14, fontWeight:900 }}>Psycovery Hope Coach</div>
+                    <div style={{ fontSize:10, opacity:0.85, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.4px" }}>Specialist 1:1 Coaching</div>
+                  </div>
                 </div>
+                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"3px 9px", fontSize:10, fontWeight:800 }}>From £75</div>
               </div>
-              <div style={{ fontSize:18, opacity:0.7, position:"relative" }}>›</div>
+              <div style={{ fontSize:12, lineHeight:1.5, opacity:0.95, marginBottom:10, position:"relative" }}>
+                Real change takes more than an app. A dedicated Psycovery coach works with you 1:1 to rebuild goals, break barriers and stay on track.
+              </div>
+              <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:10, position:"relative" }}>
+                {["✅ Hope Theory specialist","✅ Criminal justice focus","✅ Flexible sessions","✅ Real results"].map(f=>(
+                  <div key={f} style={{ background:"rgba(255,255,255,0.2)", borderRadius:99, padding:"3px 8px", fontSize:10, fontWeight:600 }}>{f}</div>
+                ))}
+              </div>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative" }}>
+                <div style={{ fontSize:11, opacity:0.85 }}>Phone or video · Flexible scheduling</div>
+                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"6px 14px", fontSize:12, fontWeight:800 }}>Book Now ›</div>
+              </div>
             </button>
 
             <div style={{ background:"#fff", borderRadius:16, padding:20, marginTop:16, boxShadow:"0 2px 8px rgba(0,0,0,0.06)", borderTop:`3px solid ${GOLD}` }}>
