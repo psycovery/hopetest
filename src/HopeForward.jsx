@@ -1335,7 +1335,7 @@ export default function App() {
   const [onboarded, setOnboarded] = useState(false);
   const [slide, setSlide] = useState(0);
   const [screen, setScreen] = useState("home");
-  const [goals, setGoals] = useState(initialGoals);
+  const [goals, setGoals] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [newGoal, setNewGoal] = useState({ title:"", category:"Probation & Supervision", step1:"", step2:"", step3:"" });
   const [selectedPlan, setSelectedPlan] = useState(null);
