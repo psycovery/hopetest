@@ -79,11 +79,11 @@ const SEED_USERS = [
 
 const categoryColors = {
   "Probation & Supervision":"#c0392b", Housing:BLUE, Employment:ORANGE,
-  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50",
+  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5",
 };
 const categoryIcons = {
   "Probation & Supervision":"⚖️", Housing:"🏠", Employment:"💼",
-  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱",
+  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️",
 };
 
 const SERVICE_CATEGORIES = ["Housing","Employment","Mental Health","Substance Use","Legal & Probation","Family Support","Food & Finance","Education & Training","Health","Community"];
@@ -205,6 +205,18 @@ const goalLibrary = {
     { title:"Become a role model for others on a similar journey", steps:["Share my story with one person who might benefit from hearing it","Explore peer mentoring or volunteering with a reentry organisation","Recognise that my lived experience has real value and power"] },
     { title:"Build confidence in social situations", steps:["Start with low-pressure social situations such as a community group or class","Practise small talk and making eye contact with one new person each week","Remind myself that confidence grows through action not waiting"] },
     { title:"Create a vision for the life I want", steps:["Write or draw a description of my ideal life in 3 years","Break it down into the areas of housing, work, relationships and health","Pin it somewhere visible and read it every morning as a reminder"] },
+  ],
+  Legal:[
+    { title:"Understand my criminal record and what it means", steps:["Request a copy of my criminal record through the DBS basic disclosure service","Learn which convictions are spent under the Rehabilitation of Offenders Act 1974","Speak to Nacro or a solicitor if I am unsure what I need to disclose and when"] },
+    { title:"Get free legal advice about my situation", steps:["Contact Citizens Advice or a local law centre for a free appointment","Check if I qualify for legal aid on the gov.uk legal aid checker","Prepare a written summary of my situation before any advice appointment"] },
+    { title:"Challenge an unfair conviction or sentence", steps:["Contact the Criminal Cases Review Commission if I believe I was wrongly convicted","Speak to a solicitor about grounds for appeal within the appeal time limits","Gather any new evidence or witness statements that support my case"] },
+    { title:"Remove or reduce barriers caused by my criminal record", steps:["Use Nacro's criminal record support service for personalised guidance","Check whether my conviction is spent and no longer needs to be disclosed","Write a confident disclosure statement for job applications with help from Nacro"] },
+    { title:"Understand my rights when dealing with police", steps:["Learn my right to remain silent and right to a solicitor if arrested","Keep a note of any police interactions including date, time and officers involved","Contact a solicitor or Liberty if I believe my rights have been violated"] },
+    { title:"Sort out any outstanding fines or court orders", steps:["Contact the court to get a full breakdown of what I owe","Ask Citizens Advice about applying to reduce or remit fines I cannot afford","Set up a manageable payment plan and get written confirmation from the court"] },
+    { title:"Navigate a restraining order or civil injunction", steps:["Read the order carefully and note every condition and its boundaries","Seek urgent legal advice if I am unsure what the order permits","Keep a daily log of my whereabouts in case of any future disputes"] },
+    { title:"Get my driving licence back after disqualification", steps:["Check my disqualification end date with the DVLA","Complete any required extended driving test or drink-drive rehabilitation course","Apply to the DVLA to restore my licence once the period has ended"] },
+    { title:"Understand the sex offenders register and my obligations", steps:["Get a full written explanation of my notification requirements from police","Set reminders for all annual registration appointments","Speak to a solicitor about applying for removal from the register after the eligible period"] },
+    { title:"Plan for life after a Serious Crime Prevention Order or SHPO", steps:["Get a written copy of all conditions and review them with a solicitor","Build a daily routine that clearly keeps me within the order's requirements","Apply to vary or discharge conditions that prevent legitimate work or housing once eligible"] },
   ],
 };
 
