@@ -1653,12 +1653,36 @@ export default function App() {
               ))}
             </div>
 
-            <button onClick={()=>setScreen("coaching")} style={{ width:"100%", marginTop:12, background:GRAD_GOLD, border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:`0 4px 14px ${GOLD}55`, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:10, width:44, height:44, display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={32}/></div>
-                <div><div style={{ fontSize:14, fontWeight:800 }}>Psycovery Hope Coach</div><div style={{ fontSize:12, opacity:0.9 }}>1:1 coaching from Psycovery experts</div></div>
+            <button onClick={()=>setScreen("coaching")} style={{ width:"100%", marginTop:12, background:GRAD_GOLD, border:"none", borderRadius:16, padding:"20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:`0 6px 20px ${GOLD}55`, position:"relative", overflow:"hidden" }}>
+              {/* decorative circles */}
+              <div style={{ position:"absolute", top:-24, right:-24, width:100, height:100, borderRadius:"50%", background:"rgba(255,255,255,0.1)" }}/>
+              <div style={{ position:"absolute", bottom:-20, right:60, width:70, height:70, borderRadius:"50%", background:"rgba(255,255,255,0.07)" }}/>
+              {/* top row */}
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12, position:"relative" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:10, width:42, height:42, display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={30}/></div>
+                  <div>
+                    <div style={{ fontSize:16, fontWeight:900, letterSpacing:"-0.3px" }}>Psycovery Hope Coach</div>
+                    <div style={{ fontSize:10, opacity:0.85, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.5px" }}>Specialist 1:1 Coaching</div>
+                  </div>
+                </div>
+                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"4px 10px", fontSize:10, fontWeight:800 }}>From £75</div>
               </div>
-              <div style={{ fontSize:18, opacity:0.8 }}>›</div>
+              {/* sales line */}
+              <div style={{ fontSize:13, lineHeight:1.55, opacity:0.95, marginBottom:12, position:"relative" }}>
+                Real change takes more than an app. A dedicated Psycovery coach works with you 1:1 to rebuild your goals, break through your barriers and stay on track.
+              </div>
+              {/* feature pills */}
+              <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:14, position:"relative" }}>
+                {["✅ Hope Theory specialist","✅ Criminal justice focus","✅ Flexible sessions","✅ Real results"].map(f=>(
+                  <div key={f} style={{ background:"rgba(255,255,255,0.2)", borderRadius:99, padding:"4px 10px", fontSize:11, fontWeight:600 }}>{f}</div>
+                ))}
+              </div>
+              {/* CTA row */}
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", position:"relative" }}>
+                <div style={{ fontSize:12, opacity:0.85 }}>Sessions available by phone or video</div>
+                <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"7px 16px", fontSize:13, fontWeight:800 }}>Book Now ›</div>
+              </div>
             </button>
             {/* Guided Hope Plan IAP */}
             <button onClick={()=>setShowHopePlan(true)} style={{ width:"100%", marginTop:12, background:"linear-gradient(135deg,#0f2027,#203a43,#2c5364)", border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:"0 6px 20px rgba(0,0,0,0.28)", display:"flex", justifyContent:"space-between", alignItems:"center", position:"relative", overflow:"hidden" }}>
