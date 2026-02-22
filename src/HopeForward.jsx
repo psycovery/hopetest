@@ -785,6 +785,52 @@ const ProfileScreen = ({ profile, onSave, onBack }) => {
           </div>
         </div>
 
+        {/* Probation Officer details */}
+        <div style={{ background:"#fff", borderRadius:18, padding:20, boxShadow:"0 4px 16px rgba(0,0,0,0.06)", marginBottom:16, borderTop:`3px solid #6C3FC5` }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+            <div style={{ width:36, height:36, borderRadius:10, background:"#6C3FC514", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>👤</div>
+            <div>
+              <div style={{ fontSize:13, fontWeight:800, color:"#333" }}>Probation Officer</div>
+              <div style={{ fontSize:11, color:"#aaa", marginTop:1 }}>Your contact details for supervision</div>
+            </div>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+            <div>
+              <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:6 }}>Officer name <span style={{ fontWeight:400, color:"#bbb" }}>(optional)</span></div>
+              <input value={draft.poName||""} onChange={e=>setDraft(p=>({...p,poName:e.target.value}))} placeholder="e.g. Sarah Williams" style={inp()}/>
+            </div>
+            <div>
+              <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:6 }}>Phone number <span style={{ fontWeight:400, color:"#bbb" }}>(optional)</span></div>
+              <input value={draft.poPhone||""} onChange={e=>setDraft(p=>({...p,poPhone:e.target.value}))} placeholder="e.g. 0300 123 4567" inputMode="tel" style={inp()}/>
+            </div>
+            <div>
+              <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:6 }}>Email address <span style={{ fontWeight:400, color:"#bbb" }}>(optional)</span></div>
+              <input value={draft.poEmail||""} onChange={e=>setDraft(p=>({...p,poEmail:e.target.value}))} placeholder="e.g. s.williams@hmps.gov.uk" inputMode="email" style={inp()}/>
+            </div>
+            <div>
+              <div style={{ fontSize:12, fontWeight:700, color:"#555", marginBottom:6 }}>Office / NPS region <span style={{ fontWeight:400, color:"#bbb" }}>(optional)</span></div>
+              <input value={draft.poOffice||""} onChange={e=>setDraft(p=>({...p,poOffice:e.target.value}))} placeholder="e.g. Greater Manchester Probation" style={inp()}/>
+            </div>
+          </div>
+          {(draft.poName||draft.poPhone||draft.poEmail)&&(
+            <div style={{ marginTop:14, background:"#f8f0ff", borderRadius:12, padding:"12px 14px", display:"flex", alignItems:"center", gap:10, border:"1px solid #e0ccff" }}>
+              <span style={{ fontSize:20 }}>👤</span>
+              <div>
+                {draft.poName&&<div style={{ fontSize:13, fontWeight:700, color:"#333" }}>{draft.poName}</div>}
+                {draft.poOffice&&<div style={{ fontSize:11, color:"#888", marginTop:1 }}>{draft.poOffice}</div>}
+                <div style={{ display:"flex", gap:10, marginTop:6 }}>
+                  {draft.poPhone&&<a href={`tel:${draft.poPhone.replace(/\s/g,"")}`} style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#6C3FC5", color:"#fff", borderRadius:99, padding:"4px 12px", fontSize:11, fontWeight:700, textDecoration:"none" }}>📞 Call</a>}
+                  {draft.poEmail&&<a href={`mailto:${draft.poEmail}`} style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#f0e6ff", color:"#6C3FC5", borderRadius:99, padding:"4px 12px", fontSize:11, fontWeight:700, textDecoration:"none", border:"1px solid #d4b8ff" }}>✉️ Email</a>}
+                </div>
+              </div>
+            </div>
+          )}
+          <div style={{ marginTop:12, background:"#f8fafc", borderRadius:10, padding:"10px 12px", display:"flex", gap:8, alignItems:"flex-start" }}>
+            <span style={{ fontSize:14, flexShrink:0, marginTop:1 }}>🔒</span>
+            <div style={{ fontSize:11, color:"#888", lineHeight:1.5 }}>Your probation officer details are private to your device and never shared.</div>
+          </div>
+        </div>
+
         <button onClick={handleSave} style={{ width:"100%", background:saved?GREEN:GRAD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:800, cursor:"pointer", boxShadow:`0 4px 16px ${saved?GREEN:BLUE}55`, transition:"background 0.3s" }}>
           {saved?"✓ Saved!":"Save Profile"}
         </button>
@@ -1503,7 +1549,7 @@ export default function App() {
   const [showAddService, setShowAddService] = useState(false);
   const [newService, setNewService] = useState({ name:"", category:"Housing", city:"", address:"", phone:"", website:"", description:"" });
   const [addServiceSuccess, setAddServiceSuccess] = useState(false);
-  const [profile, setProfile] = useState({ firstName:"Alex", lastName:"", preferredName:"Alex", name:"Alex", region:"", photo:"", bio:"", prison:"" });
+  const [profile, setProfile] = useState({ firstName:"Alex", lastName:"", preferredName:"Alex", name:"Alex", region:"", photo:"", bio:"", prison:"", poName:"", poPhone:"", poEmail:"", poOffice:"" });
   const [showProfile, setShowProfile] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showSuggester, setShowSuggester] = useState(false);
