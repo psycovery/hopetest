@@ -79,11 +79,11 @@ const SEED_USERS = [
 
 const categoryColors = {
   "Probation & Supervision":"#c0392b", Housing:BLUE, Employment:ORANGE,
-  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5",
+  Education:GREEN, Family:"#8E44AD", Health:"#16A085", Finance:"#d35400", Identity:"#2c3e50", Legal:"#6C3FC5", "Dealing with Barriers":"#E8873A",
 };
 const categoryIcons = {
   "Probation & Supervision":"⚖️", Housing:"🏠", Employment:"💼",
-  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️",
+  Education:"📚", Family:"👨‍👩‍👧", Health:"🧠", Finance:"💰", Identity:"🌱", Legal:"⚖️", "Dealing with Barriers":"🧱",
 };
 
 const SERVICE_CATEGORIES = ["Housing","Employment","Mental Health","Substance Use","Legal & Probation","Family Support","Food & Finance","Education & Training","Health","Community"];
@@ -217,6 +217,82 @@ const goalLibrary = {
     { title:"Get my driving licence back after disqualification", steps:["Check my disqualification end date with the DVLA","Complete any required extended driving test or drink-drive rehabilitation course","Apply to the DVLA to restore my licence once the period has ended"] },
     { title:"Understand the sex offenders register and my obligations", steps:["Get a full written explanation of my notification requirements from police","Set reminders for all annual registration appointments","Speak to a solicitor about applying for removal from the register after the eligible period"] },
     { title:"Plan for life after a Serious Crime Prevention Order or SHPO", steps:["Get a written copy of all conditions and review them with a solicitor","Build a daily routine that clearly keeps me within the order's requirements","Apply to vary or discharge conditions that prevent legitimate work or housing once eligible"] },
+  ],
+  "Dealing with Barriers":[
+    { title:"Turn rejection into resilience", steps:["Write down the last time I was rejected and what I learned from it","Remind myself that rejection is a redirection not a verdict on my worth","Set a goal to try again within 48 hours of any setback — momentum beats hesitation"] },
+    { title:"Overcome the fear of judgement from others", steps:["Write a list of the people whose opinion genuinely matters to my future","Practise responding to stigma with calm confidence — prepare a short honest statement","Remember that most people are focused on their own challenges, not mine"] },
+    { title:"Break through a mental block that is holding me back", steps:["Name the block clearly — is it fear, shame, uncertainty or lack of information?","Talk to someone I trust about the barrier and ask if they see a way through","Take the smallest possible action towards the thing I have been avoiding"] },
+    { title:"Deal with discrimination in the job market", steps:["Research my rights under the Equality Act and the Rehabilitation of Offenders Act","Document any unfair treatment in writing with dates and details","Contact Nacro or Citizens Advice to explore whether I have grounds for a complaint"] },
+    { title:"Stop letting my past define my future", steps:["Write two lists — what I have been through and who I am choosing to become","Share my story with one trusted person as an act of reclaiming my own narrative","Replace the phrase 'I am my record' with 'I am what I do next' as a daily affirmation"] },
+    { title:"Build hope when everything feels hopeless", steps:["Identify one small area of my life where I do have control and focus there first","Contact a peer mentor or support group of others who have faced similar challenges","Write down three things — however small — that went right today"] },
+    { title:"Manage setbacks without giving up", steps:["Expect that the path forward will not be straight — setbacks are part of every journey","Create a personal 'recovery plan' — a list of 3 things I will do when I hit a low point","Call or message a trusted person within 24 hours of a significant setback"] },
+    { title:"Handle stress without falling back on old habits", steps:["Identify my top 3 stress triggers and the habits they tempt me towards","Replace each trigger with a planned healthy response — exercise, a call, fresh air","Talk to my support worker or GP about stress management and coping strategies"] },
+    { title:"Push through the shame of asking for help", steps:["Remind myself that asking for help is a sign of strength not weakness","Write a list of the people and organisations that exist specifically to help me","Make one call or send one message today — the hardest part is always the first step"] },
+    { title:"Stay motivated when progress feels slow", steps:["Look back at where I started and write down every change however small","Break my big goal into weekly targets so I can see movement every 7 days","Find one person further along the same journey and let their progress inspire mine"] },
+  ],
+};
+
+
+const BARRIERS_BY_CATEGORY = {
+  "Probation & Supervision":[
+    { barrier:"Fear of being judged by my probation officer", tip:"Your probation officer has seen every situation — honesty builds trust and gets you better support." },
+    { barrier:"Anxiety about missing an appointment", tip:"Set two reminders: one 24hrs before and one 2hrs before. Plan your route the day before." },
+    { barrier:"Feeling like the system is against me", tip:"Focus on what you can control — your attendance, your honesty, your effort. That's what builds a positive record." },
+    { barrier:"Not understanding my licence conditions", tip:"Write them down and ask your PO to explain anything unclear. Knowing the rules clearly reduces anxiety." },
+  ],
+  Housing:[
+    { barrier:"Landlords refusing me due to my record", tip:"Focus on Ban the Box landlords and housing associations — many exist specifically to help people in your situation." },
+    { barrier:"Not knowing where to start", tip:"Shelter's free helpline (0808 800 4444) can map out your options in one call. You don't have to figure this out alone." },
+    { barrier:"Feeling ashamed to ask for housing support", tip:"Housing services exist for exactly this moment. Asking is the strongest move you can make right now." },
+    { barrier:"Previous evictions or rent arrears on my record", tip:"Many councils must still house you in priority need. Get advice from Citizens Advice before giving up." },
+  ],
+  Employment:[
+    { barrier:"Employers rejecting me because of my conviction", tip:"One no is not all nos. There are thousands of Ban the Box employers — each rejection narrows the search to those who will say yes." },
+    { barrier:"Not feeling good enough", tip:"Your resilience, life experience and determination are genuinely rare qualities that many employers value enormously." },
+    { barrier:"Gaps in my employment history", tip:"Volunteering, training, caregiving and personal development all count. Frame your gap as a period of growth." },
+    { barrier:"Feeling overwhelmed by the job search", tip:"Apply for one job today, not ten. One honest application beats ten rushed ones every time." },
+  ],
+  Education:[
+    { barrier:"Feeling too old or too behind to learn", tip:"Adult learners bring life experience that younger students don't have. Every teacher knows that makes you an asset." },
+    { barrier:"Bad memories of school", tip:"Adult education is nothing like school. You choose your pace, your subject and your environment." },
+    { barrier:"Not believing I am intelligent enough", tip:"Intelligence is not fixed — it grows with effort. The people who succeed are those who keep going, not those who started ahead." },
+    { barrier:"Struggling to find time to study", tip:"Even 20 minutes a day adds up to over 120 hours a year. Consistency beats intensity every time." },
+  ],
+  Family:[
+    { barrier:"Fear of rejection from my family", tip:"Reaching out takes courage. Whether they respond immediately or not, making contact is a step that speaks for itself." },
+    { barrier:"Guilt about the impact of my actions on loved ones", tip:"Guilt tells you that you care. Channel it into consistent actions — showing up, being honest, being reliable." },
+    { barrier:"Not knowing what to say after a long absence", tip:"You don't need the perfect words. 'I've been thinking about you and I want to do better' is enough to start." },
+    { barrier:"Court orders limiting my contact with my children", tip:"Document everything, attend every permitted contact, and work with a family solicitor to build a positive record over time." },
+  ],
+  Health:[
+    { barrier:"Not feeling worth the effort of looking after myself", tip:"Every step you take to care for yourself is an act of defiance against every setback you have faced. You are worth it." },
+    { barrier:"Fear of what a doctor might find or judge", tip:"GPs are bound by confidentiality. They have seen everything. Their job is to help, not judge." },
+    { barrier:"Using substances to cope with stress", tip:"That coping strategy made sense at the time. There are other tools now — speak to your GP or a keyworker this week." },
+    { barrier:"Mental health affecting my motivation", tip:"On the hardest days, the goal is just one small thing. Get up, drink water, step outside. Small actions rebuild momentum." },
+  ],
+  Finance:[
+    { barrier:"Debt that feels impossible to repay", tip:"Debt doesn't disappear by avoiding it — but it does shrink with a plan. StepChange will help you build one for free." },
+    { barrier:"No ID to open a bank account", tip:"Most banks accept a combination of documents. Monzo and Starling are known to be flexible for people in your situation." },
+    { barrier:"Feeling too ashamed to claim benefits", tip:"You have paid into the system. Claiming support you are entitled to is not charity — it is yours." },
+    { barrier:"Not trusting financial institutions after negative experiences", tip:"A basic bank account or credit union is a tool, not a trap. Start small and build from there." },
+  ],
+  Identity:[
+    { barrier:"Feeling permanently defined by my worst moment", tip:"Your worst moment is one data point in a whole life. Who you are today — choosing to grow — is louder than your past." },
+    { barrier:"Not knowing who I am outside of old habits and roles", tip:"Identity is built through action. Try one new thing this week. You discover who you are by becoming them." },
+    { barrier:"Internalised shame making me feel worthless", tip:"Shame thrives in silence. Talk to one trusted person — a mentor, support worker or counsellor. Spoken, it loses its power." },
+    { barrier:"Struggling to believe change is possible for me", tip:"The fact that you are here, reading this, setting goals — that is already evidence that change is happening." },
+  ],
+  Legal:[
+    { barrier:"Not understanding my rights", tip:"Ignorance of the law is never your fault when no one has explained it. Nacro and Citizens Advice are free and confidential." },
+    { barrier:"Fear of engaging with the legal system again", tip:"Knowing your rights protects you. Engaging from a position of knowledge is very different from when you had none." },
+    { barrier:"Feeling like the system will never be fair to me", tip:"The system is imperfect — that is true. But within it there are solicitors, advocates and organisations fighting for people like you." },
+    { barrier:"Outstanding legal issues causing anxiety", tip:"Unresolved issues feel bigger when avoided. One free legal advice appointment can turn anxiety into a clear action plan." },
+  ],
+  "Dealing with Barriers":[
+    { barrier:"Feeling like barriers are permanent", tip:"Every barrier you name is a barrier you can plan around. The ones that stop you are the ones you never identify." },
+    { barrier:"Comparing my progress to others", tip:"You are not running anyone else's race. Your starting line was different. Your pace is your own." },
+    { barrier:"Losing hope after repeated setbacks", tip:"Hope is not a feeling — it is a practice. Name one goal, name one step, take it. That is how hope is rebuilt." },
+    { barrier:"Not feeling ready to start", tip:"Readiness is a myth. You will never feel fully ready. The start itself creates the readiness." },
   ],
 };
 
@@ -1422,6 +1498,7 @@ export default function App() {
   const [screen, setScreen] = useState("home");
   const [goals, setGoals] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const [barrierGoalId, setBarrierGoalId] = useState(null);
   const [newGoal, setNewGoal] = useState({ title:"", category:"Probation & Supervision", step1:"", step2:"", step3:"" });
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [booked, setBooked] = useState(false);
@@ -1882,7 +1959,20 @@ export default function App() {
                 <div style={{ background:"#f0f0f0", borderRadius:99, height:6, marginTop:10, marginBottom:12 }}>
                   <div style={{ background:GOLD, borderRadius:99, height:6, width:`${g.agency}%`, transition:"width 0.4s" }}/>
                 </div>
-                {g.steps.map((s,i)=>(
+                {/* Tab switcher */}
+                <div style={{ display:"flex", background:"#f4f7fb", borderRadius:10, padding:3, marginBottom:12 }}>
+                  {["Steps","Barriers"].map(tab=>(
+                    <button key={tab} onClick={()=>setBarrierGoalId(barrierGoalId===g.id&&tab==="Barriers"?null:tab==="Barriers"?g.id:null)}
+                      style={{ flex:1, padding:"7px 0", border:"none", borderRadius:8, cursor:"pointer", fontSize:12, fontWeight:700, transition:"all 0.15s",
+                        background: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? "#fff" : "transparent",
+                        color: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? (tab==="Barriers"?"#E8873A":BLUE) : "#aaa",
+                        boxShadow: (tab==="Barriers"?barrierGoalId===g.id:barrierGoalId!==g.id) ? "0 1px 4px rgba(0,0,0,0.10)" : "none" }}>
+                      {tab==="Barriers"?"🧱 Barriers":"✅ Steps"}
+                    </button>
+                  ))}
+                </div>
+                {/* Steps tab */}
+                {barrierGoalId!==g.id&&g.steps.map((s,i)=>(
                   <div key={i} onClick={()=>toggleStep(g.id,i)} style={{ display:"flex", alignItems:"center", gap:10, padding:"7px 0", cursor:"pointer", borderBottom:i<g.steps.length-1?"1px solid #f5f5f5":"none" }}>
                     <div style={{ width:20, height:20, borderRadius:6, border:`2px solid ${g.completed[i]?BLUE:"#ddd"}`, background:g.completed[i]?BLUE:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
                       {g.completed[i]&&<span style={{ color:"#fff", fontSize:12, fontWeight:800 }}>✓</span>}
@@ -1890,6 +1980,17 @@ export default function App() {
                     <div style={{ fontSize:13, color:g.completed[i]?"#aaa":"#333", textDecoration:g.completed[i]?"line-through":"none" }}>{s}</div>
                   </div>
                 ))}
+                {/* Barriers tab */}
+                {barrierGoalId===g.id&&(
+                  <div>
+                    {(BARRIERS_BY_CATEGORY[g.category]||BARRIERS_BY_CATEGORY["Dealing with Barriers"]).map((b,i)=>(
+                      <div key={i} style={{ background:"#fff8f0", borderRadius:12, padding:"11px 13px", marginBottom:8, borderLeft:"3px solid #E8873A" }}>
+                        <div style={{ fontSize:12, fontWeight:700, color:"#c0622a", marginBottom:4 }}>🧱 {b.barrier}</div>
+                        <div style={{ fontSize:12, color:"#555", lineHeight:1.55 }}>💡 {b.tip}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
             <button onClick={()=>setScreen("addGoal")} style={{ width:"100%", background:GRAD, border:"none", borderRadius:14, padding:16, color:"#fff", fontSize:15, fontWeight:700, cursor:"pointer" }}>+ Write My Own Goal</button>
