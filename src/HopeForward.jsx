@@ -1652,16 +1652,7 @@ export default function App() {
                 </button>
               ))}
             </div>
-            <button onClick={()=>setShowLeaderboard(true)} style={{ width:"100%", marginTop:12, background:`linear-gradient(135deg,#1a1a2e,#2c3e50)`, border:"none", borderRadius:14, padding:"16px 20px", color:"#fff", cursor:"pointer", textAlign:"left", display:"flex", justifyContent:"space-between", alignItems:"center", boxShadow:"0 4px 14px rgba(0,0,0,0.2)" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ background:"rgba(255,255,255,0.12)", borderRadius:10, width:44, height:44, display:"flex", alignItems:"center", justifyContent:"center", fontSize:24 }}>🏆</div>
-                <div>
-                  <div style={{ fontSize:14, fontWeight:800 }}>Hope Leaderboard</div>
-                  <div style={{ fontSize:12, opacity:0.7 }}>{SEED_USERS.length+1} members · Avg {communityAvg}% community score</div>
-                </div>
-              </div>
-              <div style={{ fontSize:18, opacity:0.6 }}>›</div>
-            </button>
+
             <button onClick={()=>setScreen("coaching")} style={{ width:"100%", marginTop:12, background:GRAD_GOLD, border:"none", borderRadius:14, padding:"18px 20px", color:"#fff", cursor:"pointer", textAlign:"left", boxShadow:`0 4px 14px ${GOLD}55`, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
               <div style={{ display:"flex", alignItems:"center", gap:12 }}>
                 <div style={{ background:"rgba(255,255,255,0.25)", borderRadius:10, width:44, height:44, display:"flex", alignItems:"center", justifyContent:"center" }}><PsycoveryLogo size={32}/></div>
